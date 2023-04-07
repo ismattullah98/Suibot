@@ -1,4 +1,4 @@
-
+require('../database/database')
 let Users = require('./Users');
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
