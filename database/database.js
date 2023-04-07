@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql');
-let USERNAME = process.env.DBUSERNAME;
-let PW = process.env.DBPASSWORD;
+let username = process.env.DBUSERNAME;
+let pw = process.env.DBPASSWORD;
 console.log(USERNAME,PW)
 const connection = mysql.createConnection({
 host: 'localhost',
@@ -12,6 +12,7 @@ database: 'suibot'
 connection.connect((err) => {
 if (err) throw err;
 console.log('Koneksi berhasil');
+console.log(username,pw)
 });
 
 module.exports = connection;
