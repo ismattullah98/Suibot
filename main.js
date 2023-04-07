@@ -1,10 +1,12 @@
 let Users = require('./Users');
+require('dotenv').config();
+let BOT_TOKEN = process.env.BOT_TOKEN;
 const fs = require('fs')
 var TelegramBot = require('node-telegram-bot-api');
-var token = '5910387173:AAFqnLQGVdwj7a-ms2x06-LDb7s2rJJTPqA';
+var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
 //BUTTON MeNU
-bot.onText(/\/start/, (msg) => {
+/*bot.onText(/\/start/, (msg) => {
 const chatId = msg.chat.id;
 bot.sendMessage(chatId,'Welcome Guys🗿🗿🗿', {
 reply_markup: {
@@ -25,12 +27,7 @@ one_time_keyboard: false
 })
 //callback query
 
-//
 
-//blacklist word
-bot.onText(/\/clear/, function (msg) {
-bot.deleteMessage(msg.chat.id, msg.message_id);
-});
 
 //wipe All Chat
 bot.on('message', (msg) => {
@@ -73,7 +70,7 @@ one_time_keyboard: false
 //
 
 });
-
+*/
 
 //Set-Up sui wallet
 let isRecording = false;
