@@ -1,3 +1,4 @@
+require('./database/database')
 let Users = require('./Users');
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
@@ -103,4 +104,9 @@ bot.on('message', (msg) => {
 bot.onText(/\/checkbalance/, (msg, match) => {
 const chatId = msg.chat.id;
 bot.sendMessage(chatId, 'Silahkan pilih jaringan:', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Devnet', callback_data='devnet',scale= 0.2), InlineKeyboardButton('Testnet', callback_data='testnet',scale= 0.2), InlineKeyboardButton('Mainnet', callback_data='mainnet',scale=0.2)]]))
+});
+
+connection.connect((err) => {
+if (err) throw err;
+console.log('Koneksi berhasil');
 });

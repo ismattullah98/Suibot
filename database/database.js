@@ -12,3 +12,6 @@ connection.connect((err) => {
 if (err) throw err;
 console.log('Koneksi berhasil');
 });
+
+
+module exports = connection
