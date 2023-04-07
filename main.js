@@ -102,5 +102,5 @@ bot.on('message', (msg) => {
 //On click My Balance
 bot.onText(/\/checkbalance/, (msg, match) => {
 const chatId = msg.chat.id;
-bot.sendMessage(chatId, 'Silahkan pilih jaringan:', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Devnet', callback_data='devnet'), InlineKeyboardButton('Testnet', callback_data='testnet'), InlineKeyboardButton('Mainnet', callback_data='mainnet')]]))
+bot.sendMessage(chatId, 'Silahkan pilih jaringan:', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Devnet', callback_data='devnet',scale= 0.2), InlineKeyboardButton('Testnet', callback_data='testnet',scale= 0.2), InlineKeyboardButton('Mainnet', callback_data='mainnet',scale=0.2)]]))
 });
