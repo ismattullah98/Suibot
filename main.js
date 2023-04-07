@@ -5,6 +5,8 @@ const fs = require('fs')
 var TelegramBot = require('node-telegram-bot-api');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
+
+
 //BUTTON MeNU
 /*bot.onText(/\/start/, (msg) => {
 const chatId = msg.chat.id;
@@ -95,4 +97,21 @@ bot.on('message', (msg) => {
     console.log('Alamat wallet:', walletAddress);
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
   }
+});
+
+//On click My Balance
+bot.command('checkbalance', (ctx) => {
+ctx.reply(
+'Silahkan pilih jaringan yang ingin Anda cek',
+Telegraf.Markup.inlineKeyboard([
+[
+Telegraf.Markup.callbackButton('Devnet', 'DEVNET'),
+Telegraf.Markup.callbackButton('Testnet', 'TESTNET'),
+Telegraf.Markup.callbackButton('Mainnet (Soon)', 'MAINNET', {
+disable: true
+})
+]
+])
+.extra()
+);
 });
