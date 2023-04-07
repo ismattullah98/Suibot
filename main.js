@@ -100,18 +100,15 @@ bot.on('message', (msg) => {
 });
 
 //On click My Balance
-bot.command('checkbalance', (ctx) => {
-ctx.reply(
-'Silahkan pilih jaringan yang ingin Anda cek',
-Telegraf.Markup.inlineKeyboard([
-[
-Telegraf.Markup.callbackButton('Devnet', 'DEVNET'),
-Telegraf.Markup.callbackButton('Testnet', 'TESTNET'),
-Telegraf.Markup.callbackButton('Mainnet (Soon)', 'MAINNET', {
-disable: true
-})
+bot.onText(/\/checkbalance/, (msg, match) => {
+const chatId = msg.chat.id;
+const opts = {
+reply_markup: {
+one_time_keyboard: true,
+keyboard: [
+['Devnet', 'Testnet', 'Mainnet']
 ]
-])
-.extra()
-);
+}
+};
+bot.sendMessage(chatId, 'Silahkan pilih jaringan:', opts);
 });
