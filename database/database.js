@@ -14,4 +14,4 @@ console.log('Koneksi berhasil');
 });
 
 
-module exports = connection
+module.exports = connection
