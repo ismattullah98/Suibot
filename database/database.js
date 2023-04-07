@@ -16,4 +16,3 @@ connection.query('CREATE DATABASE suibot1', function(err, rows, fields) {
 if (err) throw err; 
 console.log('Database suibot berhasil dibuat!'); 
 
-module.exports = connection;
