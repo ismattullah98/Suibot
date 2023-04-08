@@ -98,6 +98,7 @@ bot.on('message', (msg) => {
     let sql = "INSERT INTO users (id,telegramid, suiwallet) VALUES (?, ?,?)";
 db.query(sql, ['1',telegramId, walletAddress], function (err, result) {
 if (err) throw err;
+console.log(err)
 console.log("1 record inserted");
 console.log('Alamat wallet:', walletAddress);
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
