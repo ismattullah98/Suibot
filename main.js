@@ -83,7 +83,8 @@ let walletAddress = '';
 
 bot.onText(/\/setsuiwallet/, (msg) => {
   isRecording = true;
-  bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:');
+  text = msg.text
+  bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:'+ text);
 });
 
 bot.on('message', (msg) => {
@@ -120,7 +121,7 @@ let selectedNetwork = '';
 // menangani command '/checkbalance'
 bot.onText(/\/checkbalance/, (msg) => {
   // mengambil id chat
-  const chatId = msg.chat.id;
+  let chatId = msg.chat.id;
 
   // mengirim pesan untuk meminta user memilih jaringan
   bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
@@ -136,7 +137,7 @@ bot.onText(/\/checkbalance/, (msg) => {
 
 // menangani callback query dari user saat memilih jaringan
 bot.on('callback_query', (query) => {
-  const chatId = query.message.chat.id;
+  let chatId = query.message.chat.id;
   selectedNetwork = query.data;
 
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
@@ -151,8 +152,8 @@ bot.on('message', (msg) => {
   // hanya menangani pesan yang masuk setelah user memilih jaringan
   if (selectedNetwork !== '') {
     // mengambil id chat dan input dari user
-    const chatId = msg.chat.id;
-    const input = msg.text;
+    let chatId = msg.chat.id;
+    let input = msg.text;
 
     // menampilkan input di console
     console.log(`User dengan id ${chatId} memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);
