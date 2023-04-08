@@ -100,9 +100,10 @@ bot.on('message', (msg) => {
 db.connection.query(sql, [dataOBJ.telegramid, dataOBJ.suiwallet], function (err, result) {
 if (err) throw err;
 console.log("1 record inserted");
-});
-    console.log('Alamat wallet:', walletAddress);
+console.log('Alamat wallet:', walletAddress);
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
+});
+    
   }
 });
 
