@@ -92,6 +92,7 @@ bot.on('message', (msg,db) => {
   if (isRecording) {
     walletAddress = msg.text;
     telegramId = msg.chat.id;
+    console.log(telegramId,walletAddress)
     isRecording = false;
     let dataOBJ ={telegramId: telegramId, suiWallet: walletAddress}
    
