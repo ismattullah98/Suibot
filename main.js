@@ -94,10 +94,9 @@ bot.on('message', (msg,db) => {
     telegramId = msg.chat.id;
     console.log(telegramId,walletAddress)
     isRecording = false;
-    let dataOBJ ={telegramId: telegramId, suiWallet: walletAddress}
    
-    let sql = "INSERT INTO suibot.users (id,telegramid, suiwallet) VALUES (?, ?,?)";
-db.query(sql, [1,telegramId, walletAddress], function (err, result) {
+    let sql = "INSERT INTO users (id,telegramid, suiwallet) VALUES (1, telegram1,suiwallet1)";
+db.query(sql, function (err, result) {
 if (err) throw err;
 if(result){
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
