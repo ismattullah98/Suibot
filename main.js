@@ -2,7 +2,6 @@ const db = require('./database/database')
 let Users = require('./Users');
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
-const fs = require('fs')
 var TelegramBot = require('node-telegram-bot-api');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
@@ -109,6 +108,8 @@ bot.on('message', (msg) => {
     
   }else{
     bot.sendMessage(chatId, 'Masukan Alamat Wallet dengan benar!');
+  }
+  
   }
   
 });
