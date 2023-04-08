@@ -98,16 +98,16 @@ bot.on('message', (msg) => {
    const telegramId = msg.chat.id;
    const suiWallet = msg.text;
 
-connection.connect();
+db.connect();
 
 const query = `INSERT INTO users (id, telegramid, suiwallet) VALUES (${id}, '${telegramId}', '${suiWallet}')`;
 
-connection.query(query, (error, results, fields) => {
+db.query(query, (error, results, fields) => {
   if (error) throw error;
   console.log('Data berhasil ditambahkan ke dalam tabel');
 });
 
-connection.end();
+db.end();
     
 });
     
