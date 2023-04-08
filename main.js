@@ -113,8 +113,54 @@ bot.on('message', (msg) => {
   
 });
 
-//On click My Balance
-/*bot.onText(/\/checkbalance/, (msg, match) => {
-const chatId = msg.chat.id;
-bot.sendMessage(chatId, 'Silahkan pilih jaringan:', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Devnet', callback_data='devnet',scale= 0.2), InlineKeyboardButton('Testnet', callback_data='testnet',scale= 0.2), InlineKeyboardButton('Mainnet', callback_data='mainnet',scale=0.2)]]))
-});*/
+//check balance
+// variabel global untuk menyimpan jaringan yang dipilih oleh user
+let selectedNetwork = '';
+
+// menangani command '/checkbalance'
+bot.onText(/\/checkbalance/, (msg) => {
+  // mengambil id chat
+  const chatId = msg.chat.id;
+
+  // mengirim pesan untuk meminta user memilih jaringan
+  bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: 'Jaringan A', callback_data: 'A' }],
+        [{ text: 'Jaringan B', callback_data: 'B' }],
+        [{ text: 'Jaringan C', callback_data: 'C' }]
+      ]
+    }
+  });
+});
+
+// menangani callback query dari user saat memilih jaringan
+bot.on('callback_query', (query) => {
+  const chatId = query.message.chat.id;
+  selectedNetwork = query.data;
+
+  // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Silakan masukkan input:');
+
+  // menghapus keyboard yang muncul setelah user memilih jaringan
+  bot.deleteMessage(chatId, query.message.message_id);
+});
+
+// menangani pesan dari user setelah memilih jaringan
+bot.on('message', (msg) => {
+  // hanya menangani pesan yang masuk setelah user memilih jaringan
+  if (selectedNetwork !== '') {
+    // mengambil id chat dan input dari user
+    const chatId = msg.chat.id;
+    const input = msg.text;
+
+    // menampilkan input di console
+    console.log(`User dengan id ${chatId} memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);
+
+    // mengirim balasan ke user
+    bot.sendMessage(chatId, `Anda memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);
+
+    // mereset nilai selectedNetwork agar user dapat memilih jaringan lagi
+    selectedNetwork = '';
+  }
+});
