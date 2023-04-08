@@ -1,4 +1,4 @@
-require('./database/database')
+const db = require('./database/database')
 let Users = require('./Users');
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
@@ -95,6 +95,12 @@ bot.on('message', (msg) => {
     isRecording = false;
     let dataOBJ ={telegramId: telegramId, suiWallet: walletAddress}
     Users.Users.push(dataOBJ);
+    db.connection
+    let sql = "INSERT INTO suibot.users (telegramid, suiwallet) VALUES (?, ?)";
+db.connection.query(sql, [dataOBJ.telegramid, dataOBJ.suiwallet], function (err, result) {
+if (err) throw err;
+console.log("1 record inserted");
+});
     console.log('Alamat wallet:', walletAddress);
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
   }
