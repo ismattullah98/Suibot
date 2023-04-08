@@ -1,5 +1,4 @@
 const db = require('./database/database')
-let Users = require('./Users');
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
@@ -171,3 +170,8 @@ bot.on('message', (msg) => {
 bot.on('message',(msg)=>{
   console.log(msg.text)
 })
+
+
+
+//Log all Error
+bot.on("polling_error", console.log);
