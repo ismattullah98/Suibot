@@ -88,26 +88,34 @@ bot.onText(/\/setsuiwallet/, (msg) => {
   bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:');
 });
 
-bot.on('message', (msg,db) => {
+bot.on('message', (msg) => {
   if (isRecording) {
     walletAddress = msg.text;
     telegramId = msg.chat.id;
     console.log(telegramId,walletAddress)
     isRecording = false;
-   
-    let sql = "INSERT INTO users (id,telegramid, suiwallet) VALUES (1, telegram1,suiwallet1)";
-db.query(sql, function (err, result) {
-if (err) throw err;
-if(result){
-    bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
-}
+   const id = 1;
+   const telegramId = msg.chat.id;
+   const suiWallet = msg.text;
+
+connection.connect();
+
+const query = `INSERT INTO users (id, telegramid, suiwallet) VALUES (${id}, '${telegramId}', '${suiWallet}')`;
+
+connection.query(query, (error, results, fields) => {
+  if (error) throw error;
+  console.log('Data berhasil ditambahkan ke dalam tabel');
+});
+
+connection.end();
+    
 });
     
   }
 });
 
 //On click My Balance
-bot.onText(/\/checkbalance/, (msg, match) => {
+/*bot.onText(/\/checkbalance/, (msg, match) => {
 const chatId = msg.chat.id;
 bot.sendMessage(chatId, 'Silahkan pilih jaringan:', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Devnet', callback_data='devnet',scale= 0.2), InlineKeyboardButton('Testnet', callback_data='testnet',scale= 0.2), InlineKeyboardButton('Mainnet', callback_data='mainnet',scale=0.2)]]))
-});
+});*/
