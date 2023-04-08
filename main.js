@@ -90,16 +90,12 @@ bot.onText(/\/setsuiwallet/, (msg) => {
 
 bot.on('message', (msg) => {
   if (isRecording) {
-    walletAddress = msg.text;
-    telegramId = msg.chat.id;
-    console.log(telegramId,walletAddress)
     isRecording = false;
    const id = 1;
    const telegramId = msg.chat.id;
    const suiWallet = msg.text;
-
+//Connect And Check to DB
 db.connect();
-
 const query = `INSERT INTO users (id, telegramid, suiwallet) VALUES (${id}, '${telegramId}', '${suiWallet}')`;
 
 db.query(query, (error, results, fields) => {
