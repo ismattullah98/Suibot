@@ -90,24 +90,27 @@ bot.onText(/\/setsuiwallet/, (msg) => {
 
 bot.on('message', (msg) => {
   if (isRecording) {
-    isRecording = false;
+    
    const id = 1;
    const telegramId = msg.chat.id;
    const suiWallet = msg.text;
+   isRecording = false;
 //Connect And Check to DB
-console.log(telegramId,suiWallet)
-db.connection.connect();
-const query = `INSERT INTO users (id, telegramid, suiwallet) VALUES (${id}, '${telegramId}', '${suiWallet}')`;
+  if (msg.text && msg.text.match(/^0x[a-fA-F0-9]{40}$/)) {
+    // Insert user's data into MySQL database
+    const sql = `INSERT INTO users (id,telegramid, suiwallet) VALUES (${id},${msg.from.id}, '${msg.text}')`;
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log('User data inserted into MySQL database');
+    });
 
-db.connection.query(query, (error, results, fields) => {
-  if (error) throw error;
-  console.log('Data berhasil ditambahkan ke dalam tabel');
-});
-db.connection.end();
+    // Send a message to confirm successful data input
+    bot.sendMessage(chatId, 'Terima kasih, data wallet address telah berhasil disimpan!');
     
-});
-    
+  }else{
+    bot.sendMessage(chatId, 'Masukan Alamat Wallet dengan benar!');
   }
+  
 });
 
 //On click My Balance
