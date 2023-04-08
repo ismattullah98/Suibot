@@ -90,7 +90,7 @@ bot.onText(/\/setsuiwallet/, (msg) => {
 bot.on('message', (msg) => {
   if (isRecording) {
    chatId = msg.chat.id 
-   const id = 1;
+   const id = ;
    const telegramId = msg.chat.id;
    const suiWallet = msg.text;
    isRecording = false;
