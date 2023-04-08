@@ -88,7 +88,7 @@ bot.onText(/\/setsuiwallet/, (msg) => {
   bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:');
 });
 
-bot.on('message', (msg) => {
+bot.on('message', (msg,db) => {
   if (isRecording) {
     walletAddress = msg.text;
     telegramId = msg.chat.id;
@@ -96,7 +96,7 @@ bot.on('message', (msg) => {
     let dataOBJ ={telegramId: telegramId, suiWallet: walletAddress}
    
     let sql = "INSERT INTO suibot.users (id,telegramid, suiwallet) VALUES (?, ?,?)";
-db.query(sql, ['1',telegramId, walletAddress], function (err, result) {
+db.query(sql, [1,telegramId, walletAddress], function (err, result) {
 if (err) throw err;
 if(result){
     bot.sendMessage(msg.chat.id, 'Wallet Saved♒');
