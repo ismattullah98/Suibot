@@ -165,3 +165,9 @@ bot.on('message', (msg) => {
     selectedNetwork = '';
   }
 });
+
+
+
+bot.on('message',(msg)=>{
+  console.log(msg.text)
+})
