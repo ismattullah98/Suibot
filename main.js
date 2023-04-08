@@ -85,7 +85,7 @@ let walletAddress = '';
 
 bot.onText(/\/setsuiwallet/, (msg) => {
   isRecording = true;
-  bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:');
+  bot.sendMessage(msg.chat.id, 'Silakan masukkan alamat wallet:'+ msg.text);
 });
 
 bot.on('message', (msg) => {
