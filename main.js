@@ -95,7 +95,7 @@ bot.on('message', (msg) => {
     isRecording = false;
     let dataOBJ ={telegramId: telegramId, suiWallet: walletAddress}
     Users.Users.push(dataOBJ);
-    db.connection
+    
     let sql = "INSERT INTO suibot.users (telegramid, suiwallet) VALUES (?, ?)";
 db.connection.query(sql, [dataOBJ.telegramid, dataOBJ.suiwallet], function (err, result) {
 if (err) throw err;
