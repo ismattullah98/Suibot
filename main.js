@@ -141,8 +141,24 @@ bot.on('callback_query', (query) => {
   selectedNetwork = query.data;
 
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
+  //Devnet
+  if(selectedNetwork == 'devnet'){
   bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
-
+  //devnet
+  bot.deleteMessage(chatId, query.message.message_id);  
+  }
+  //Testnet
+  if(selectedNetwork == 'testnet'){
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
+  //testnet
+  bot.deleteMessage(chatId, query.message.message_id);  
+  }
+  //Mainnet
+  if(selectedNetwork == 'mainnet'){
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
+  //mainnet
+  bot.deleteMessage(chatId, query.message.message_id);  
+  }
   // menghapus keyboard yang muncul setelah user memilih jaringan
   bot.deleteMessage(chatId, query.message.message_id);
 });
@@ -186,8 +202,12 @@ bot.onText(/\/faucet/, (msg) => {
 bot.on('callback_query', (query) => {
   let chatId = query.message.chat.id;
   selectedNetwork = query.data;
-  if(selectedNetwork.toString().toLowerCase() == 'faucetdevnet'){}
-  if(selectedNetwork.toString().toLowerCase() == 'faucettestnet'){}  
+  if(selectedNetwork.toString().toLowerCase() == 'faucetdevnet'){
+    bot.sendMessage(chatId, 'faucet devnet');
+  }
+  if(selectedNetwork.toString().toLowerCase() == 'faucettestnet'){
+    bot.sendMessage(chatId, 'faucet testnet')
+  }  
   // menghapus keyboard yang muncul setelah user memilih jaringan
   if(selectedNetwork.toString().toLowerCase() == 'close'){
   bot.deleteMessage(chatId, query.message.message_id);}
