@@ -4,8 +4,8 @@ let username = process.env.DBUSERNAME;
 let pw = process.env.DBPASSWORD;
 const connection = mysql.createConnection({
 host: 'localhost',
-user: USERNAME,
-password: PW,
+user: username,
+password: pw,
 database: 'suibot'
 });
 connection.connect((err) => {
