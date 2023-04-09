@@ -165,7 +165,35 @@ bot.on('message', (msg) => {
     selectedNetwork = '';
   }
 });
+//Faucet Feature
+bot.onText(/\/faucet/, (msg) => {
+  // mengambil id chat
+  let chatId = msg.chat.id;
 
+  // mengirim pesan untuk meminta user memilih jaringan
+  bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: 'Devnet', callback_data: 'devnet' }],
+        [{ text: 'Testnet', callback_data: 'testnet' }],
+        [{ text: 'Close', callback_data: 'Close' }]
+      ]
+    }
+  });
+});
+
+// menangani callback query dari user saat memilih jaringan
+bot.on('callback_query', (query) => {
+  let chatId = query.message.chat.id;
+  selectedNetwork = query.data;
+
+  // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
+
+  // menghapus keyboard yang muncul setelah user memilih jaringan
+  if(selectedNetwork.toString().toLowerCase() == 'close'){
+  bot.deleteMessage(chatId, query.message.message_id);}
+});
 
 
 bot.on('message',(msg)=>{
