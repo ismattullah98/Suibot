@@ -160,7 +160,7 @@ bot.on('callback_query', (query) => {
   bot.deleteMessage(chatId, query.message.message_id);  
   }
   // menghapus keyboard yang muncul setelah user memilih jaringan
-  bot.deleteMessage(chatId, query.message.message_id);
+  
 });
 
 // menangani pesan dari user setelah memilih jaringan
