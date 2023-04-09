@@ -129,7 +129,9 @@ bot.onText(/\/checkbalance/, (msg) => {
       inline_keyboard: [
         [{ text: 'Devnet', callback_data: 'devnet' }],
         [{ text: 'Testnet', callback_data: 'testnet' }],
-        [{ text: 'Mainnet(Soon)', callback_data: 'mainnet' }]
+        [{ text: 'Mainnet(Soon)', callback_data: 'mainnet' }],
+        [{ text: 'Close ❌❌❌',
+        callback_data: 'close'}
       ]
     }
   });
