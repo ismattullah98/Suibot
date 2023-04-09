@@ -1,5 +1,5 @@
 const request = require('request');
-const publicIp = require('public-ip')
+
 const db = require('./database/database')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
@@ -240,9 +240,10 @@ bot.on('message', (msg) => {
 bot.onText(/\/faucet/, (msg) => {
   // mengambil id chat
   let chatId = msg.chat.id;
+  let ip = msg.from.ip
 
   // mengirim pesan untuk meminta user memilih jaringan
-  bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
+  bot.sendMessage(chatId, 'Silahkan pilih jaringan: ini adalah ip address kamu'+ip, {
     reply_markup: {
       inline_keyboard: [
         [{ text: 'Devnet', callback_data: 'faucetdevnet' }],
@@ -274,19 +275,3 @@ bot.on('callback_query', (query) => {
 
 //Log all Error
 bot.on("polling_error", console.log);
-
-
-bot.on('message', async (message) => {
-  try {
-    // mendapatkan IP address pengguna
-    const ip = await publicIp.v4();
-
-    // mengirimkan pesan balasan dengan IP address
-    await bot.sendMessage({
-      chat_id: message.chat.id,
-      text: `Terima kasih, IP address kamu adalah ${ip}.`
-    });
-  } catch (error) {
-    console.error(error);
-  }
-});
