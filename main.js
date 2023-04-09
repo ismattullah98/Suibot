@@ -183,7 +183,7 @@ bot.on('callback_query', (query) => {
   //Devnet
   if(selectedNetwork == 'devnet'){
   
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒'+ msg.from.ip_address);
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒'+ msg.from.ip_address.toString());
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }
