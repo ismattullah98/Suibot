@@ -1,3 +1,4 @@
+const request = require('request'); 
 const db = require('./database/database')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
@@ -183,7 +184,7 @@ bot.on('callback_query', (query) => {
   //Devnet
   if(selectedNetwork == 'devnet'){
   console.log(msg.from.ip_address)
-  const request = require('request'); 
+  
 // Make a request to the ipapi.com API
 request('http://ipapi.com/json/', (err, response, body) => {
 if (err) {
@@ -195,7 +196,7 @@ const data = JSON.parse(body);
 // Log IP address data
 console.log(data);
 });
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒';
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }
