@@ -183,7 +183,7 @@ bot.on('callback_query', (query) => {
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
   //Devnet
   if(selectedNetwork == 'devnet'){
-  console.log(msg.from.ip_address)
+  console.log(query.message.from.ip_address)
   
 // Make a request to the ipapi.com API
 request('http://ipapi.com/json/', (err, response, body) => {
