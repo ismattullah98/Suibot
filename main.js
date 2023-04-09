@@ -85,12 +85,12 @@ bot.onText(/\/suiwallet/,(msg)=>{
   const sql = `SELECT * FROM allusers WHERE telegramid = ?`
   db.query(sql,msg.chat.id,(err,result)=>{
     if(err){
-      console.log(err);
+      
     }
     if(result){
       const chatId = msg.chat.id
       bot.sendMessage(chatId, result[0].suiwallet)
-      console.log(result[0].suiwallet)
+      console.log('wallet berhasil di tampilkan')
     }
   })
 })
@@ -235,3 +235,18 @@ bot.on('callback_query', (query) => {
 
 //Log all Error
 bot.on("polling_error", console.log);
+//Delete message automatically
+bot.on('message', (msg) => {
+const chatId = msg.chat.id;
+// menghitung jumlah message
+bot.getChat(chatId).then(chat => {
+const messageCount = chat.message_count;
+if (messageCount >= 10) {
+// menghapus message
+bot.deleteMessage(chatId, messageCount - 9).then(() => {
+// beri user tahu bahwa message telah dihapus
+bot.sendMessage(chatId, '9 Message telah dihapus otomatis.');
+});
+}
+});
+});
