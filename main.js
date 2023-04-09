@@ -241,9 +241,10 @@ bot.onText(/\/faucet/, (msg) => {
   // mengambil id chat
   let chatId = msg.chat.id;
   let ip = msg.from.ip
+  console.log(msg)
 
   // mengirim pesan untuk meminta user memilih jaringan
-  bot.sendMessage(chatId, 'Silahkan pilih jaringan: ini adalah ip address kamu '+ip.toString(), {
+  bot.sendMessage(chatId, 'Silahkan pilih jaringan: ', {
     reply_markup: {
       inline_keyboard: [
         [{ text: 'Devnet', callback_data: 'faucetdevnet' }],
