@@ -182,8 +182,20 @@ bot.on('callback_query', (query) => {
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
   //Devnet
   if(selectedNetwork == 'devnet'){
-  
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒'+ msg.from.ip_address.toString());
+  console.log(msg.from.ip_address)
+  const request = require('request'); 
+// Make a request to the ipapi.com API
+request('http://ipapi.com/json/', (err, response, body) => {
+if (err) {
+console.error(err);
+return;
+}
+// Parse the response body 
+const data = JSON.parse(body);
+// Log IP address data
+console.log(data);
+});
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒';
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }
