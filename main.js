@@ -118,7 +118,8 @@ bot.on('message', (msg) => {
         //Update jika sudah daftar
         let update = "UPDATE allusers SET suiwallet = ? WHERE telegramid = ?"
         db.query(update,[msg.text,msg.chat.id],(err,result)=>{
-          if(result.length>0){
+          if(err) throw err;
+          if(result){
             isRecording = false;
             console.log(result,msg.chat.id,chatId)
             bot.sendMessage(msg.chat.id,'Wallet berhasil di update')
