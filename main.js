@@ -134,7 +134,7 @@ let selectedNetwork = '';
 bot.onText(/\/checkbalance/, (msg) => {
   // mengambil id chat
   let chatId = msg.chat.id;
-
+  bot.deleteMessage(chatId, msg.text)
   // mengirim pesan untuk meminta user memilih jaringan
   bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
     reply_markup: {
