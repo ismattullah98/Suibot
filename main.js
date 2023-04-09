@@ -88,6 +88,7 @@ bot.onText(/\/suiwallet/,(msg)=>{
       console.log(err);
     }
     if(result){
+      const chatId = msg.chat.id
       bot.sendMessage(chatId, result[0].suiwallet)
       console.log(result[0].suiwallet)
     }
