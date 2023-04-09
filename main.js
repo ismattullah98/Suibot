@@ -80,7 +80,16 @@ let walletAddress = '';
 /*bot.onText(/\/start/, (msg) => {
   bot.sendMessage(msg.chat.id, 'Halo, silakan kirimkan perintah /setsuiwallet untuk memasukkan alamat wallet.');
 });*/
-
+//view wallet Address
+bot.onText(/\/suiwallet/,(msg)=>{
+  const sql = `SELLECT * FROM allusers WHERE (telegramid) VALUES(${msg.chat.id})`
+  db.query(sql,(err,result)=>{
+    if(result){
+      console.log(result)
+    }
+  })
+})
+//
 bot.onText(/\/setsuiwallet/, (msg) => {
   isRecording = true;
   text = msg.text
