@@ -159,7 +159,7 @@ bot.on('message', (msg) => {
     console.log(`User dengan id ${chatId} memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);
 
     // mengirim balasan ke user
-    bot.sendMessage(chatId, `Anda memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);
+    /*bot.sendMessage(chatId, `Anda memasukkan input '${input}' untuk jaringan ${selectedNetwork}`);*/
 
     // mereset nilai selectedNetwork agar user dapat memilih jaringan lagi
     selectedNetwork = '';
@@ -174,8 +174,8 @@ bot.onText(/\/faucet/, (msg) => {
   bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
     reply_markup: {
       inline_keyboard: [
-        [{ text: 'Devnet', callback_data: 'devnet' }],
-        [{ text: 'Testnet', callback_data: 'testnet' }],
+        [{ text: 'Devnet', callback_data: 'faucetdevnet' }],
+        [{ text: 'Testnet', callback_data: 'faucettestnet' }],
         [{ text: 'Close', callback_data: 'Close' }]
       ]
     }
@@ -186,13 +186,12 @@ bot.onText(/\/faucet/, (msg) => {
 bot.on('callback_query', (query) => {
   let chatId = query.message.chat.id;
   selectedNetwork = query.data;
-
-  // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
-
+  if(selectedNetwork.toString().toLowerCase() == 'faucetdevnet'){}
+  if(selectedNetwork.toString().toLowerCase() == 'faucettestnet'){}  
   // menghapus keyboard yang muncul setelah user memilih jaringan
   if(selectedNetwork.toString().toLowerCase() == 'close'){
   bot.deleteMessage(chatId, query.message.message_id);}
+  selectedNetwork = '';
 });
 
 
