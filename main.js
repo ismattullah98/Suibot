@@ -131,7 +131,7 @@ bot.onText(/\/checkbalance/, (msg) => {
         [{ text: 'Testnet', callback_data: 'testnet' }],
         [{ text: 'Mainnet(Soon)', callback_data: 'mainnet' }],
         [{ text: 'Close ❌❌❌',
-        callback_data: 'close'}
+        callback_data: 'close'}]
       ]
     }
   });
