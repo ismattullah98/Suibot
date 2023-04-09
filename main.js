@@ -84,13 +84,13 @@ let walletAddress = '';
 bot.onText(/\/suiwallet/,(msg)=>{
   const sql = `SELECT * FROM allusers WHERE telegramid = ?`
   db.query(sql,msg.chat.id,(err,result)=>{
-    if(err){
-      
-    }
-    if(result){
+   
+    if(result.length>0){
       const chatId = msg.chat.id
       bot.sendMessage(chatId, result[0].suiwallet)
       console.log('wallet berhasil di tampilkan')
+    }else{
+      bot.sendMessage(msg.chat.id,'Lu Belum Setting Wallet asu🗿')
     }
   })
 })
@@ -103,6 +103,7 @@ bot.onText(/\/setsuiwallet/, (msg) => {
 
 bot.on('message', (msg) => {
   if (isRecording) {
+   isRecording = false;
    chatId = msg.chat.id 
    const id = 0;
    const telegramId = msg.chat.id;
@@ -140,7 +141,7 @@ bot.on('message', (msg) => {
     
     
   }else{
-    isRecording = false;
+    
     bot.sendMessage(chatId, 'Format wallet tidak valid, klik /setsuiwallet jika ingin mengulang kembali');
   }
   
