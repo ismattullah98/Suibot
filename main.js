@@ -1,4 +1,5 @@
-const request = require('request'); 
+const request = require('request');
+const publicIp = require('public-ip')
 const db = require('./database/database')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
@@ -276,10 +277,13 @@ bot.on("polling_error", console.log);
 
 
 bot.on('message', async (msg) => {
-  const chatId = msg.chat.id;
+  try{const chatId = msg.chat.id;
 
   // ambil IP address publik pengguna
   const ipAddress = await publicIp.v4();
 
   bot.sendMessage(chatId, `Selamat datang, IP address anda adalah ${ipAddress}`);
+  }catch(err){
+    console.log(err)
+  }
 });
