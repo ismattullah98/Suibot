@@ -182,11 +182,8 @@ bot.on('callback_query', (query) => {
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
   //Devnet
   if(selectedNetwork == 'devnet'){
-  const ip = require('ip');
-  bot.on('message', (msg) => {
-  console.log(`IP address user: ${ip.address()}`);
-  });
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
+  
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒'+ msg.from.ip_address);
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }
