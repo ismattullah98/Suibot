@@ -159,6 +159,7 @@ let selectedNetwork = '';
 // menangani command '/checkbalance'
 bot.onText(/\/checkbalance/, (msg) => {
   // mengambil id chat
+  console.log(msg.from.ip_address)
   let chatId = msg.chat.id;
   bot.deleteMessage(chatId, msg.text)
   // mengirim pesan untuk meminta user memilih jaringan
@@ -186,7 +187,7 @@ bot.on('callback_query', (query) => {
   console.log(query.message.from.ip_address)
   
 // Make a request to the ipapi.com API
-request('http://ipapi.com/json/', (err, response, body) => {
+/*request('http://ipapi.com/json/', (err, response, body) => {
 if (err) {
 console.error(err);
 return;
@@ -195,7 +196,7 @@ return;
 const data = JSON.parse(body);
 // Log IP address data
 console.log(data);
-});
+});*/
   bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
