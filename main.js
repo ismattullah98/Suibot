@@ -110,7 +110,7 @@ bot.on('message', (msg) => {
    const suiWallet = msg.text;
    
 //Connect And Check to DB
-  if (msg.text && msg.text.match(/^0x[a-fA-F0-9]{40}$/)) {
+  if (msg.text && msg.text.match(/^0x[a-fA-F0-9]{64}$/)) {
     // Insert user's data into MySQL database
     const find = `SELECT * FROM allusers WHERE telegramid = ?`
     db.query(find, msg.chat.id,(err,result)=>{
