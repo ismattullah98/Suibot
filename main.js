@@ -276,14 +276,17 @@ bot.on('callback_query', (query) => {
 bot.on("polling_error", console.log);
 
 
-bot.on('message', async (msg) => {
-  try{const chatId = msg.chat.id;
+bot.on('message', async (message) => {
+  try {
+    // mendapatkan IP address pengguna
+    const ip = await publicIp.v4();
 
-  // ambil IP address publik pengguna
-  const ipAddress = await publicIp.v4();
-
-  bot.sendMessage(chatId, `Selamat datang, IP address anda adalah ${ipAddress}`);
-  }catch(err){
-    console.log(err)
+    // mengirimkan pesan balasan dengan IP address
+    await bot.sendMessage({
+      chat_id: message.chat.id,
+      text: `Terima kasih, IP address kamu adalah ${ip}.`
+    });
+  } catch (error) {
+    console.error(error);
   }
 });
