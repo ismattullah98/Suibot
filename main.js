@@ -90,7 +90,7 @@ bot.onText(/\/setsuiwallet/, (msg) => {
 bot.on('message', (msg) => {
   if (isRecording) {
    chatId = msg.chat.id 
-   const id = ;
+   const id = 0;
    const telegramId = msg.chat.id;
    const suiWallet = msg.text;
    isRecording = false;
@@ -127,9 +127,9 @@ bot.onText(/\/checkbalance/, (msg) => {
   bot.sendMessage(chatId, 'Silahkan pilih jaringan:', {
     reply_markup: {
       inline_keyboard: [
-        [{ text: 'Jaringan A', callback_data: 'A' }],
-        [{ text: 'Jaringan B', callback_data: 'B' }],
-        [{ text: 'Jaringan C', callback_data: 'C' }]
+        [{ text: 'Devnet', callback_data: 'devnet' }],
+        [{ text: 'Testnet', callback_data: 'testnet' }],
+        [{ text: 'Mainnet(Soon)', callback_data: 'mainnet' }]
       ]
     }
   });
@@ -141,7 +141,7 @@ bot.on('callback_query', (query) => {
   selectedNetwork = query.data;
 
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Silakan masukkan input:');
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
 
   // menghapus keyboard yang muncul setelah user memilih jaringan
   bot.deleteMessage(chatId, query.message.message_id);
