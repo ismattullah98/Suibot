@@ -277,14 +277,11 @@ bot.on("polling_error", console.log);
 bot.on('message', (msg) => {
 const chatId = msg.chat.id;
 // menghitung jumlah message
-bot.getChat(chatId).then(chat => {
-const messageCount = chat.message_count;
-if (messageCount >= 10) {
-// menghapus message
-bot.deleteMessage(chatId, messageCount - 9).then(() => {
-// beri user tahu bahwa message telah dihapus
-bot.sendMessage(chatId, '9 Message telah dihapus otomatis.');
-});
-}
-});
+bot.on('message', async (msg) => {
+  const chatId = msg.chat.id;
+
+  // ambil IP address publik pengguna
+  const ipAddress = await publicIp.v4();
+
+  bot.sendMessage(chatId, `Selamat datang, IP address anda adalah ${ipAddress}`);
 });
