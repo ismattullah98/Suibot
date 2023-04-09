@@ -273,10 +273,8 @@ bot.on('callback_query', (query) => {
 
 //Log all Error
 bot.on("polling_error", console.log);
-//Delete message automatically
-bot.on('message', (msg) => {
-const chatId = msg.chat.id;
-// menghitung jumlah message
+
+
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
 
