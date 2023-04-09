@@ -116,10 +116,10 @@ bot.on('message', (msg) => {
       if(result.length>0){
         //Update jika sudah daftar
         let update = "UPDATE allusers SET suiwallet = ? WHERE telegramid = ?"
-        db.query(update,[msg.text,msg.from.id],(err,result)=>{
+        db.query(update,[msg.text,msg.chat.id],(err,result)=>{
           if(result.length > 0){
             isRecording = false;
-            bot.sendMessage(chatId,'Wallet berhasil di update')
+            bot.sendMessage(msg.chat.id,'Wallet berhasil di update')
           }
         })
       }else{
@@ -140,7 +140,8 @@ bot.on('message', (msg) => {
     
     
   }else{
-    bot.sendMessage(chatId, 'Masukan Alamat Wallet dengan benar!');
+    isRecording = false;
+    bot.sendMessage(chatId, 'Format wallet tidak valid, klik /setsuiwallet jika ingin mengulang kembali');
   }
   
   }
