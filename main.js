@@ -84,6 +84,9 @@ let walletAddress = '';
 bot.onText(/\/suiwallet/,(msg)=>{
   const sql = `SELLECT * FROM allusers WHERE (telegramid) VALUES(${msg.chat.id})`
   db.query(sql,(err,result)=>{
+    if(err){
+      console.log(err);
+    }
     if(result){
       console.log(result)
     }
@@ -225,10 +228,6 @@ bot.on('callback_query', (query) => {
   selectedNetwork = '';
 });
 
-
-bot.on('message',(msg)=>{
-  console.log(msg.text)
-})
 
 
 
