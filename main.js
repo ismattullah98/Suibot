@@ -111,11 +111,27 @@ bot.on('message', (msg) => {
 //Connect And Check to DB
   if (msg.text && msg.text.match(/^0x[a-fA-F0-9]{40}$/)) {
     // Insert user's data into MySQL database
-    const sql = `INSERT INTO allusers (id,telegramid, suiwallet) VALUES (${id},${msg.from.id}, '${msg.text}')`;
-    db.query(sql, (err, result) => {
-      if (err) throw err;
-      console.log('User data inserted into MySQL database');
-    });
+    const find = `SELECT * FROM allusers WHERE telegramid = ?`
+    db.query(find, msg.chat.id,(err,result)=>{
+      if(result.length>0){
+        //Update jika sudah daftar
+        let update = "UPDATE allusers SET suiwallet = ? WHERE telegramid = ?"
+        db.query(update,[msg.text,msg.from.id],(err,result)=>{
+          if(result.length > 0){
+            bot.sendMessage(msg.from.id,'Wallet berhasil di update')
+          }
+        })
+      }else{
+        const sql = `INSERT INTO allusers (id,telegramid, suiwallet) VALUES (${id},${msg.from.id}, '${msg.text}')`;
+        db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log('User data inserted into MySQL database');
+          
+        });
+      }
+      
+    })
+    
 
     // Send a message to confirm successful data input
     bot.sendMessage(chatId, 'Terima kasih, data wallet address telah berhasil disimpan!');
