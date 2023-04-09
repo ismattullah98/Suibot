@@ -97,7 +97,7 @@ bot.on('message', (msg) => {
 //Connect And Check to DB
   if (msg.text && msg.text.match(/^0x[a-fA-F0-9]{40}$/)) {
     // Insert user's data into MySQL database
-    const sql = `INSERT INTO users (id,telegramid, suiwallet) VALUES (${id},${msg.from.id}, '${msg.text}')`;
+    const sql = `INSERT INTO allusers (id,telegramid, suiwallet) VALUES (${id},${msg.from.id}, '${msg.text}')`;
     db.query(sql, (err, result) => {
       if (err) throw err;
       console.log('User data inserted into MySQL database');
