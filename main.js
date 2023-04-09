@@ -82,7 +82,7 @@ let walletAddress = '';
 });*/
 //view wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
-  const sql = `SELLECT * FROM allusers WHERE telegramid = ?`
+  const sql = `SELECT * FROM allusers WHERE telegramid = ?`
   db.query(sql,msg.chat.id,(err,result)=>{
     if(err){
       console.log(err);
