@@ -1,5 +1,5 @@
 const request = require('request');
-
+const api = require('./api/sui');
 const db = require('./database/database')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
