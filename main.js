@@ -1,6 +1,7 @@
 const request = require('request');
 const api = require('./api/sui');
 const db = require('./database/database')
+const query = require('./database/query')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
@@ -14,9 +15,107 @@ let isRecording = false;
 let walletAddress = '';
 
 bot.onText(/\/start/, (msg) => {
+  query.allusers.createOneUser(db,msg.chat.id,(err,result)=>{
+    if(err) throw err;
+    if(result){
+
+    }
+  })
   bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang guys');
 });
-//view wallet Address
+//VIEW EVM WALLET ADDRESS
+bot.onText(/\/evmwallet/,(msg)=>{
+  //PREPARED DATA
+  let data = {
+    telegramId: msg.chat.id
+  }
+  //FIND WALLET
+  query.evm.findOneEvm(db,data,(err,result)=>{
+    //IF FOUND 1 DATA
+    if(result.length >=0 && result.length <2){
+
+    }
+    //IF FOUND MANY DATA
+      if(result.length > 2){
+        
+      }
+  })
+})
+//SETTING-UP EVM WALLET ADDRESS
+bot.onText(/\/setevmwallet/, (msg)=>{
+isRecording= true
+ query.allusers.findOneUser(db,data,(err,result)=>{
+    if(result){
+      if(result[0].premium == 1){
+        bot.sendMessage(msg.chat.id, 'Silahkan Masukan EVM wallet dan nama wallet (eth,bsc,polygon,etc). example: ')
+      }else{
+        bot.sendMessage(msg.chat.id, 'Silahkan Masukan EVM wallet (eth,bsc,polygon,etc)')
+      }
+    }
+    if(err) throw err;
+ })
+});
+
+bot.on('message',(msg)=>{
+  if(isRecording){
+    isRecording = false
+    let data = {
+    evmwallet : msg.text,
+    telegramId : msg.chat.id
+    }
+    //check TELEGRAM USER
+    query.allusers.findOneUser(db,data,(err,result)=>{
+      if(result){
+        //IF USER PREMIUM
+        if(result[0].premium == 1){
+
+        }
+        //IF NOT PREMIUM
+        else{ //IF FORMAT CORRECT
+              if(evmwallet && evmwallet.match(/^0x[a-fA-F0-9]{40}$/)){
+                //SEARCH WALLET
+                query.evm.findOneEvm(db,data,(err,result)=>{
+                  //IF FOUND
+                  if(result.length>0){
+                    //UPDATE DATA
+                    query.evm.updateOneEvm(db,data,(err,result)=>{
+                      //IF SUCCESS
+                      if(result){
+                        //SEND MESSAGE
+                      bot.sendMessage(msg.chat.id, 'Wallet berhasil di di UPDATE');
+                      }
+                      //IF ERROR
+                      if(err) throw err;
+                    })
+                  }
+                  //IF NOT FOUND
+                  else{
+                    //INSERT DATA
+                    query.evm.createOneEvm(db,data,(err,result)=>{
+                      //IF SUCCESS
+                      if(result){
+                        //SEND MESSAGE
+                      bot.sendMessage(msg.chat.id, 'Wallet SAVED');
+                      }
+                      //IF ERROR
+                      if(err) throw err;
+                    })
+                  }
+                })
+              }
+              //IF FORMAT NOT CORRECT
+              else{
+                isRecording = false
+                bot.sendMessage(msg.chat.id, 'Format wallet tidak benar, /setevmwallet jika ingin mengulangi')
+              }
+        }
+      }
+
+    })
+    
+  }  
+})
+//view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
   const sql = `SELECT * FROM allusers WHERE telegramid = ?`
   db.query(sql,msg.chat.id,(err,result)=>{
@@ -30,7 +129,7 @@ bot.onText(/\/suiwallet/,(msg)=>{
     }
   })
 })
-//
+// SETTING-UP SUI WALLET
 bot.onText(/\/setsuiwallet/, (msg) => {
   isRecording = true;
   text = msg.text

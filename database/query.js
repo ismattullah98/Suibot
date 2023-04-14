@@ -1,14 +1,72 @@
-let sui = {
-  findOne: (db, data, callback) => {
-    let query = "SELECT * FROM  WHERE telegramid = ?"
-    db.query(query, data.telegramId, callback)
+required('.env').config()
+
+let allusers = {
+  findOneUser: (db,data,callback)=>{
+    let find = "SELECT * FROM "+ table+" WHERE telegramid = ?"
+  },
+  createOneUser: (db,data,callback)=>{
+    let Dinput = {
+      id: 1,
+      telegramid: data.telegramId,
+      premium: 0
+    }
+    let create = "INSERT INTO allusers (id,telegramid,premium) VALUES (?,?,?)"
+    db.query(create,Dinput, callback);
 
   },
-  createOne: (db, data, callback) => {
-    let query = "INSERT INTO allusers "
-    db.query(query, data, callback)
+  updateOneUser: (db,data,callback)=>{
+
   },
-  updateOne: (db, data, callback) => {
+  deleteOneUser: (db,data,callback)=>{
+
+  }
+}
+
+//SUI QUERY
+let sui = {
+  findOneSui: (db, data, callback) => {
+    let find = "SELECT * FROM sui WHERE telegramid = ?"
+    db.query(find, data.telegramId, callback)
+
+  },
+  createOneSui: (db, data, callback) => {
+    let create = "INSERT INTO sui "
+    db.query(create, data, callback)
+  },
+  updateOneSui: (db, data, callback) => {
+    let update = "UPDATE sui SET suiwallet = ? WHERE telegramid = ?"
+    db.query(update, data, callback)
   },
 }
-module.exports =  sui;
+//EVM QUERY
+let evm = {
+  //FIND
+  findOneEvm:(db,data,callback)=>{
+    let findOne = "SELECT * FROM evm WHERE telegramid = ?"
+    db.query(findOne,data.telegramId,callback)
+  },
+  findOneEvmPremium:(db,data,callback)=>{
+    let find = "SELECT * FROM evm WHERE telegramid = ? AND evmwallet = ?"
+    db.query(find,[data.telegramId,data.evmWallet],callback)
+  },
+  //CREATE
+  createOneEvm: (db, data, callback) => {
+    let create = "INSERT INTO evm (telegramid,evmwallet,namewallet) VALUES (?,?,?)"
+    db.query(create, [data.telegramId,data.evmWallet,''], callback)
+  },
+  createOneEvmPremium: (db, data, callback) => {
+    let create = "INSERT INTO evm (telegramid,evmwallet,namewallet) VALUES (?,?,?)"
+    db.query(create, [data.telegramId,data.evmWallet,data.nameWallet], callback)
+  },
+  //UPDATE
+  updateOneEvm: (db, data, callback) => {
+    let update = "UPDATE evm SET evmwallet = ? WHERE telegramid = ?"
+    db.query(update, [data.telegramid,data.evmwallet], callback)
+  },
+  updateOneEvmPremium: (db, data, callback) => {
+    let update = "UPDATE evm SET evmwallet = ? WHERE telegramid = ? AND namewallet = ?"
+    db.query(update, [data.telegramid,data.evmwallet,data.nameWallet], callback)
+  },
+}
+
+module.exports =  {sui,evm,allusers};
