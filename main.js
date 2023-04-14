@@ -11,7 +11,7 @@ var bot = new TelegramBot(token, {polling: true});
 //BUTTON MeNU
 /*bot.onText(/\/start/, (msg) => {
 const chatId = msg.chat.id;
-bot.sendMessage(chatId,'Welcome Guys🗿🗿🗿', {
+bot.sendMessage(chatId,'Welcome Guys🗿🗿🗿' {
 reply_markup: {
 keyboard: [
 [{
