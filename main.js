@@ -2,26 +2,42 @@ const request = require('request');
 const api = require('./api/sui');
 const db = require('./database/database')
 const query = require('./database/query')
+const tele = require('./telegram/menu')
+require('./telegram/menu')
 require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
+//Menu
 
-
+tele.telegram.menu(bot);
+tele.telegram.callbackQuery(bot);
 
 //Set-Up sui wallet
 let isRecording = false;
 let walletAddress = '';
 
 bot.onText(/\/start/, (msg) => {
-  query.allusers.createOneUser(db,msg.chat.id,(err,result)=>{
-    if(err) throw err;
-    if(result){
+  let data = {
+    telegramId: msg.chat.id
+  }
+  query.allusers.findOneUser(db,data,(err,res)=>{
+    if(res == 0){
+      query.allusers.createOneUser(db,msg.chat.id,(err,result)=>{
+        if(err) throw err;
+        if(result){
+          console.log(result); 
+          bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang ');
 
+        }
+      })
+    }if(res.length == 1){
+      console.log(msg)
+      bot.sendMessage(msg.chat.id, `yoo,welcome back ${msg.chat.first_name} Dancuk!!!`)
     }
   })
-  bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang guys');
+ 
 });
 //VIEW EVM WALLET ADDRESS
 bot.onText(/\/evmwallet/,(msg)=>{
@@ -31,12 +47,18 @@ bot.onText(/\/evmwallet/,(msg)=>{
   }
   //FIND WALLET
   query.evm.findOneEvm(db,data,(err,result)=>{
+    //IF Not Found
+    if(result.length == 0){
+      console.log(result);
+      bot.sendMessage(data.telegramId, 'Wallet address NotFound. \n /setevmwallet For Set-up your Wallet.')
+    }
     //IF FOUND 1 DATA
-    if(result.length >=0 && result.length <2){
-
+    else if(result.length > 0){
+      console.log(result[0].evmwallet)
+      bot.sendMessage(data.telegramId, 'Your EVM Wallet: \n '+ result[0].evmwallet)
     }
     //IF FOUND MANY DATA
-      if(result.length > 2){
+    else if(result >=2){
         
       }
   })
@@ -44,8 +66,12 @@ bot.onText(/\/evmwallet/,(msg)=>{
 //SETTING-UP EVM WALLET ADDRESS
 bot.onText(/\/setevmwallet/, (msg)=>{
 isRecording= true
+  let data = {
+    telegramId: msg.chat.id
+  }
  query.allusers.findOneUser(db,data,(err,result)=>{
     if(result){
+      console.log(result)
       if(result[0].premium == 1){
         bot.sendMessage(msg.chat.id, 'Silahkan Masukan EVM wallet dan nama wallet (eth,bsc,polygon,etc). example: ')
       }else{
@@ -60,7 +86,7 @@ bot.on('message',(msg)=>{
   if(isRecording){
     isRecording = false
     let data = {
-    evmwallet : msg.text,
+    evmWallet : msg.text,
     telegramId : msg.chat.id
     }
     //check TELEGRAM USER
@@ -72,7 +98,7 @@ bot.on('message',(msg)=>{
         }
         //IF NOT PREMIUM
         else{ //IF FORMAT CORRECT
-              if(evmwallet && evmwallet.match(/^0x[a-fA-F0-9]{40}$/)){
+              if(data.evmWallet && data.evmWallet.match(/^0x[a-fA-F0-9]{40}$/)){
                 //SEARCH WALLET
                 query.evm.findOneEvm(db,data,(err,result)=>{
                   //IF FOUND
@@ -106,7 +132,7 @@ bot.on('message',(msg)=>{
               //IF FORMAT NOT CORRECT
               else{
                 isRecording = false
-                bot.sendMessage(msg.chat.id, 'Format wallet tidak benar, /setevmwallet jika ingin mengulangi')
+                bot.sendMessage(msg.chat.id, 'Format wallet tidak benar. \n klik /setevmwallet jika ingin mengulangi')
               }
         }
       }
@@ -117,7 +143,7 @@ bot.on('message',(msg)=>{
 })
 //view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
-  const sql = `SELECT * FROM allusers WHERE telegramid = ?`
+  const sql = `SELECT * FROM sui WHERE telegramid = ?`
   db.query(sql,msg.chat.id,(err,result)=>{
    
     if(result.length>0){
@@ -125,7 +151,7 @@ bot.onText(/\/suiwallet/,(msg)=>{
       bot.sendMessage(chatId, result[0].suiwallet)
       console.log('wallet berhasil di tampilkan')
     }else{
-      bot.sendMessage(msg.chat.id,'Lu Belum Setting Wallet asu🗿')
+      bot.sendMessage(msg.chat.id,'Lu Belum Setting SUI Wallet asu🗿')
     }
   })
 })
@@ -229,9 +255,8 @@ const data = JSON.parse(body);
 // Log IP address data
 console.log(data);
 });*/
-  const ip = require('ip');
-  const publicIp = ip.address();
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒'+publicIp);
+  
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }

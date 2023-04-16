@@ -1,17 +1,18 @@
-required('.env').config()
+//require('../.env').config()
 
 let allusers = {
   findOneUser: (db,data,callback)=>{
-    let find = "SELECT * FROM "+ table+" WHERE telegramid = ?"
+    let find = "SELECT * FROM allusers WHERE telegramid = ?"
+    db.query(find,data.telegramId,callback);
   },
   createOneUser: (db,data,callback)=>{
     let Dinput = {
-      id: 1,
-      telegramid: data.telegramId,
+      id: '',
+      telegramid: data,
       premium: 0
     }
     let create = "INSERT INTO allusers (id,telegramid,premium) VALUES (?,?,?)"
-    db.query(create,Dinput, callback);
+    db.query(create,[Dinput.id,Dinput.telegramid,Dinput.premium], callback);
 
   },
   updateOneUser: (db,data,callback)=>{
