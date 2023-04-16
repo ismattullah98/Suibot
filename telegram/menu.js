@@ -1,5 +1,6 @@
 let q = require('../database/query');
-let db = require('../database/database')
+let db = require('../database/database');
+const { logic } = require('./logicmenu');
 let telegram = {
     menu: (bot)=>{
         bot.onText(/\/menu/,(msg)=>{
@@ -106,7 +107,15 @@ let telegram = {
                     telegramId: chatId
                 }
                 q.evm.findOneEvm(db,data,(err,res)=>{
-                    console.log(res);
+                    if(res){
+                        let message = 'List of your Wallet: \n';
+                        res.forEach((r,index)=>{
+                            message += `${index+1}. ${r.namewallet || 'Your Wallet'} : \n ${r.evmwallet}\n`
+                        })
+                        
+                        bot.sendMessage(data.telegramId, message)
+                    }
+                    //console.log(res);
                     if(err) throw err;
                 })
             }
@@ -134,6 +143,21 @@ let telegram = {
                     ]
                 }})
             }
+            //ADD EVM WALLET
+            if(selectedQuery.toString().toLowerCase() == 'addevmwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                logic.addWallet(db,bot,data);
+            }
+            //ADD SUI WALLET
+            if(selectedQuery.toString().toLowerCase() == 'addsuiwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                logic.addWallet(bot,data);
+            }
+            
             //////////////// END OF MENU ADD WALLET//////////////////////////////
             //MENU EDIT WALLET
             if(selectedQuery.toString().toLowerCase() == 'editwallet'){

@@ -52,17 +52,17 @@ let evm = {
   },
   //CREATE
   createOneEvm: (db, data, callback) => {
-    let create = "INSERT INTO evm (telegramid,evmwallet,namewallet) VALUES (?,?,?)"
+    let create = "INSERT INTO evm (id,telegramid,evmwallet,namewallet) VALUES (?,?,?,?)"
     db.query(create, [data.telegramId,data.evmWallet,''], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
-    let create = "INSERT INTO evm (telegramid,evmwallet,namewallet) VALUES (?,?,?)"
-    db.query(create, [data.telegramId,data.evmWallet,data.nameWallet], callback)
+    let create = "INSERT INTO evm (idtelegramid,evmwallet,namewallet) VALUES (?,?,?,?)"
+    db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet], callback)
   },
   //UPDATE
   updateOneEvm: (db, data, callback) => {
     let update = "UPDATE evm SET evmwallet = ? WHERE telegramid = ?"
-    db.query(update, [data.telegramid,data.evmwallet], callback)
+    db.query(update, [data.evmWallet,data.telegramid], callback)
   },
   updateOneEvmPremium: (db, data, callback) => {
     let update = "UPDATE evm SET evmwallet = ? WHERE telegramid = ? AND namewallet = ?"
