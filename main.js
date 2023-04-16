@@ -1,10 +1,10 @@
+require('./telegram/menu')
+require('dotenv').config();
 const request = require('request');
 const api = require('./api/sui');
 const db = require('./database/database')
 const query = require('./database/query')
 const tele = require('./telegram/menu')
-require('./telegram/menu')
-require('dotenv').config();
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
 var token = BOT_TOKEN;
