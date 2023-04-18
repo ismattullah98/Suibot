@@ -1,6 +1,6 @@
 let q = require('../database/query');
 let db = require('../database/database');
-const { logic } = require('./logicmenu');
+const { logic, addWallet } = require('./logicmenu');
 let telegram = {
     menu: (bot)=>{
         bot.onText(/\/menu/,(msg)=>{
@@ -148,14 +148,14 @@ let telegram = {
                 let data = {
                     telegramId: chatId
                 }
-                logic.addWallet(db,bot,data);
+                addWallet.evm(db,bot,data);
             }
             //ADD SUI WALLET
             if(selectedQuery.toString().toLowerCase() == 'addsuiwallet'){
                 let data = {
                     telegramId: chatId
                 }
-                logic.addWallet(bot,data);
+                addWallet.sui(bot,data);
             }
             
             //////////////// END OF MENU ADD WALLET//////////////////////////////

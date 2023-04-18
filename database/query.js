@@ -31,8 +31,8 @@ let sui = {
 
   },
   createOneSui: (db, data, callback) => {
-    let create = "INSERT INTO sui "
-    db.query(create, data, callback)
+    let create = "INSERT INTO sui (id,telegramid,suiwallet,namewallet) VALUES (?,?,?,?) "
+    db.query(create, ['',data.telegramId,data.suiWallet,''||data.nameWallet], callback)
   },
   updateOneSui: (db, data, callback) => {
     let update = "UPDATE sui SET suiwallet = ? WHERE telegramid = ?"
@@ -53,7 +53,7 @@ let evm = {
   //CREATE
   createOneEvm: (db, data, callback) => {
     let create = "INSERT INTO evm (id,telegramid,evmwallet,namewallet) VALUES (?,?,?,?)"
-    db.query(create, [data.telegramId,data.evmWallet,''], callback)
+    db.query(create, ['',data.telegramId,data.evmWallet,''||data.nameWallet], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
     let create = "INSERT INTO evm (idtelegramid,evmwallet,namewallet) VALUES (?,?,?,?)"
