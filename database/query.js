@@ -9,10 +9,11 @@ let allusers = {
     let Dinput = {
       id: '',
       telegramid: data,
-      premium: 0
+      premium: 0,
+      limit: 10
     }
-    let create = "INSERT INTO allusers (id,telegramid,premium) VALUES (?,?,?)"
-    db.query(create,[Dinput.id,Dinput.telegramid,Dinput.premium], callback);
+    let create = "INSERT INTO allusers (id,telegramid,premium) VALUES (?,?,?,?)"
+    db.query(create,[Dinput.id,Dinput.telegramid,Dinput.premium,limit], callback);
 
   },
   updateOneUser: (db,data,callback)=>{
@@ -42,11 +43,11 @@ let sui = {
 //EVM QUERY
 let evm = {
   //FIND
-  findOneEvm:(db,data,callback)=>{
-    let findOne = "SELECT * FROM evm WHERE telegramid = ?"
-    db.query(findOne,data.telegramId,callback)
+  findAllEvm:(db,data,callback)=>{
+    let findAll = "SELECT * FROM evm WHERE telegramid = ?"
+    db.query(findAll,data.telegramId,callback)
   },
-  findOneEvmPremium:(db,data,callback)=>{
+  findOneEvmByWallet:(db,data,callback)=>{
     let find = "SELECT * FROM evm WHERE telegramid = ? AND evmwallet = ?"
     db.query(find,[data.telegramId,data.evmWallet],callback)
   },
@@ -70,4 +71,21 @@ let evm = {
   },
 }
 
-module.exports =  {sui,evm,allusers};
+//VENOM QUERY
+let venom = {
+  findOneVenom: (db, data, callback) => {
+    let find = "SELECT * FROM venom WHERE telegramid = ?"
+    db.query(find, data.telegramId, callback)
+
+  },
+  createOneVenom: (db, data, callback) => {
+    let create = "INSERT INTO venom (id,telegramid,venomwallet,namewallet) VALUES (?,?,?,?) "
+    db.query(create, ['',data.telegramId,data.venomWallet,''||data.nameWallet], callback)
+  },
+  updateOneVenom: (db, data, callback) => {
+    let update = "UPDATE venom SET venomwallet = ? WHERE telegramid = ?"
+    db.query(update, data, callback)
+  },
+}
+
+module.exports =  {sui,evm,venom,allusers};

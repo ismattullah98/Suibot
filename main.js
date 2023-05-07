@@ -7,6 +7,7 @@ const query = require('./database/query')
 const tele = require('./telegram/menu')
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
+const { showWallet } = require('./telegram/wallet/showWallet');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
 //Menu
@@ -143,17 +144,10 @@ bot.on('message',(msg)=>{
 })
 //view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
-  const sql = `SELECT * FROM sui WHERE telegramid = ?`
-  db.query(sql,msg.chat.id,(err,result)=>{
-   
-    if(result.length>0){
-      const chatId = msg.chat.id
-      bot.sendMessage(chatId, result[0].suiwallet)
-      console.log('wallet berhasil di tampilkan')
-    }else{
-      bot.sendMessage(msg.chat.id,'Lu Belum Setting SUI Wallet asu🗿')
-    }
-  })
+  data = {
+    telegramId: msg.chat.id
+  }
+  showWallet.sui(db,bot,data)
 })
 // SETTING-UP SUI WALLET
 bot.onText(/\/setsuiwallet/, (msg) => {

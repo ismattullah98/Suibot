@@ -1,4 +1,4 @@
-let query = require('../database/query');
+let query = require('../../database/query');
 let isRecording = false;
 let addWallet = {
     evm: (db,bot,data)=>{        
@@ -6,25 +6,17 @@ let addWallet = {
 
         query.allusers.findOneUser(db,data,(err,result)=>{
             if(result){
-                //console.log(result)
-                //IF PREMIUM
-                if(result[0].premium == 1){
-                    let limitBeginer = 100
-                    bot.sendMessage(data.telegramId, 'Silahkan Masukan EVM wallet dan nama wallet (eth,bsc,polygon,etc). example: ')
-                }
-                //IF FREE USER
-                if(result[0].premium ===0){
-                    let limitBasic = 10
+                    let limit = result[0].limit
                     //CHECK LIMIT
                     query.evm.findOneEvm(db,data,(err,res)=>{
                         //IF LIMIT REACHED
-                        if(res.length>=limitBasic){
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
+                        if(res.length>=limit){
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
 
                         }
                         //IF NO LIMIT
                         else{
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\nSilahkan Masukan EVM wallet (eth,bsc,polygon,etc)`);
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\nSilahkan Masukan EVM wallet (eth,bsc,polygon,etc)`);
                             isRecording= true;
                             bot.on('message',(msg)=>{
                             let data = {
@@ -56,7 +48,7 @@ let addWallet = {
                     
                     
                     
-                }
+                
             }
             if(err) throw err;
         })
@@ -101,6 +93,68 @@ let addWallet = {
                                     query.sui.createOneSui(db,data,(err,res)=>{
                                         if(res){
                                             console.log(data.suiWallet)
+                                            bot.sendMessage(data.telegramId, 'Success Saved!!!')
+                                            
+                                        }
+                                        if(err) throw err;
+                                        
+                                    })
+                                }else{
+                                    bot.sendMessage(data.telegramId, 'Invalid Format Wallet,')
+
+                                }
+                            }
+                            })
+                        }
+                    })
+                    
+                    
+                    
+                }
+            }
+            if(err) throw err;
+        })
+        
+    },
+
+    venom: (db,bot,data)=>{        
+        let isRecording = false;
+
+        query.allusers.findOneUser(db,data,(err,result)=>{
+            if(result){
+                //console.log(result)
+                //IF PREMIUM
+                if(result[0].premium == 1){
+                    let limitBeginer = 100
+                    bot.sendMessage(data.telegramId, 'Silahkan Masukan VENOM wallet dan nama wallet example: 0:...8a .')
+                }
+                //IF FREE USER
+                if(result[0].premium ===0){
+                    let limitBasic = 10
+                    //CHECK LIMIT
+                    query.venom.findOneVenom(db,data,(err,res)=>{
+                        //IF LIMIT REACHED
+                        if(res.length>=limitBasic){
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
+
+                        }
+                        //IF NO LIMIT
+                        else{
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\nSilahkan Masukan Venom wallet anda`);
+                            isRecording= true;
+                            bot.on('message',(msg)=>{
+                            let data = {
+                                telegramId: msg.chat.id,
+                                venomWallet: msg.text,
+                            }
+                            if(isRecording == true){
+                                isRecording = false
+                                //console.log(data.evmWallet)
+                                if(data.venomWallet && data.venomWallet.match(/^0:[a-fA-F0-9]{64}$/)){
+                                    //INSERT TO DB
+                                    query.venom.createOneVenom(db,data,(err,res)=>{
+                                        if(res){
+                                            console.log(data.venomWallet)
                                             bot.sendMessage(data.telegramId, 'Success Saved!!!')
                                             
                                         }

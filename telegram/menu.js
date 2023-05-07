@@ -1,6 +1,9 @@
 let q = require('../database/query');
 let db = require('../database/database');
-const { logic, addWallet } = require('./logicmenu');
+const {addWallet } = require('./wallet/addWallet');
+const {editWallet} = require('./wallet/editWallet');
+const { showWallet } = require('./wallet/showWallet');
+
 let telegram = {
     menu: (bot)=>{
         bot.onText(/\/menu/,(msg)=>{
@@ -94,9 +97,10 @@ let telegram = {
                 bot.sendMessage(chatId, 'Show Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'showevmwallet'},
-                        {text: 'SUI',callback_data: 'showsuiwallet'}],
-                        [{text: 'BACK',callback_data: 'backtomenuwallet'}],
-                        [{text: 'CLOSE',callback_data: 'close'}]
+                         {text: 'SUI',callback_data: 'showsuiwallet'}],
+                        [{text: 'BACK',callback_data: 'backtomenuwallet'},
+                         {text: 'CLOSE',callback_data: 'close'}],
+                        [{text: 'Menu', callback_data: 'backtomenu'}]
 
                     ]
                 }})
@@ -106,29 +110,24 @@ let telegram = {
                 let data = {
                     telegramId: chatId
                 }
-                q.evm.findOneEvm(db,data,(err,res)=>{
-                    if(res){
-                        let message = 'List of your Wallet: \n';
-                        res.forEach((r,index)=>{
-                            message += `${index+1}. ${r.namewallet || 'Your Wallet'} : \n ${r.evmwallet}\n`
-                        })
-                        
-                        bot.sendMessage(data.telegramId, message)
-                    }
-                    //console.log(res);
-                    if(err) throw err;
-                })
+                showWallet.evm(db,bot,data)
             }
             //SHOW SUI WALLET
             if(selectedQuery.toString().toLowerCase() == 'showsuiwallet'){
                 let data = {
                     telegramId: chatId
                 }
-                q.sui.findOneSui(db,data,(err,res)=>{
-                    console.log(res);
-                    if(err) throw err;
-                })
+                showWallet.sui(db,bot,data)
+                
             }
+            //SHOW VENOM WALLET
+            if(selectedQuery.toString().toLowerCase() == 'showvenomwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                showWallet.venom(db,bot,data)
+            }
+            
             //////////////// END OF MENU SHOW WALLET ////////////////////////////
             //WALLET->MENU WALLET->ADD WALLET
             if(selectedQuery.toString().toLowerCase() == 'addwallet'){
@@ -136,9 +135,11 @@ let telegram = {
                 bot.sendMessage(chatId, 'Add Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'addevmwallet'},
-                        {text: 'SUI',callback_data: 'addsuiwallet'}],
-                        [{text: 'BACK', callback_data: 'backtomenuwallet'}],
-                        [{text: 'CLOSE',callback_data: 'close'}] 
+                         {text: 'SUI',callback_data: 'addsuiwallet'},
+                         {text: 'VENOM',callback_data: 'addvenomwallet'}],
+                        [{text: 'BACK', callback_data: 'backtomenuwallet'},
+                         {text: 'CLOSE',callback_data: 'close'}],
+                        [{text: 'Menu', callback_data: 'backtomenu'}]
 
                     ]
                 }})
@@ -155,32 +156,66 @@ let telegram = {
                 let data = {
                     telegramId: chatId
                 }
-                addWallet.sui(bot,data);
+                addWallet.sui(db,bot,data);
+            }
+            //ADD VENOM WALLET
+            if(selectedQuery.toString().toLowerCase() == 'addvenomwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                addWallet.venom(db,bot,data);
             }
             
             //////////////// END OF MENU ADD WALLET//////////////////////////////
-            //MENU EDIT WALLET
+            //WALLET> MENU WALLET > EDIT WALLET
             if(selectedQuery.toString().toLowerCase() == 'editwallet'){
                 bot.deleteMessage(chatId,query.message.message_id)
                 bot.sendMessage(chatId, 'Edit Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'editevmwallet'},
                         {text: 'SUI',callback_data: 'editsuiwallet'}],
-                        [{text: 'BACK', callback_data: 'backtomenuwallet'}],
-                        [{text: 'CLOSE',callback_data: 'close'}] 
+                        [{text: 'BACK', callback_data: 'backtomenuwallet'},
+                         {text: 'CLOSE',callback_data: 'close'}],
+                        [{text: 'Menu', callback_data: 'backtomenu'}]
+
 
                     ]
                 }})
             }
-            //MENU DELETE WALLET
+            //EDIT EVM WALLET
+            if(selectedQuery.toString().toLowerCase() == 'editevmwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                editWallet.evmDisplay(db,bot,data)
+            }
+            //EDIT SUI WALLET
+            if(selectedQuery.toString().toLowerCase() == 'editsuiwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                editWallet.sui(db,bot,data);
+            }
+            //EDIT VENOM WALLET
+            if(selectedQuery.toString().toLowerCase() == 'editvenomwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                editWallet.venom(db,bot,data);
+            }
+            //////////////// END OF MENU EDIT WALLET//////////////////////////////
+
+            //MENU > WALLET MENU> DELETE WALLET
             if(selectedQuery.toString().toLowerCase() == 'deletewallet'){
                 bot.deleteMessage(chatId,query.message.message_id)
                 bot.sendMessage(chatId, 'Delete Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'deleteevmwallet'},
-                        {text: 'SUI',callback_data: 'deletesuiwallet'}],
-                        [{text: 'BACK', callback_data: 'backtomenuwallet'}],
-                        [{text: 'CLOSE',callback_data: 'close'}] 
+                         {text: 'SUI',callback_data: 'deletesuiwallet'}],
+                        [{text: 'BACK', callback_data: 'backtomenuwallet'},
+                         {text: 'CLOSE',callback_data: 'close'}],
+                        [{text: 'Menu', callback_data: 'backtomenu'}]
+                        
 
                     ]
                 }})
