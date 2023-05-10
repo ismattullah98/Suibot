@@ -22,6 +22,7 @@ let telegram = {
             })
         })
     },
+    
     callbackQuery:(bot)=>{
         bot.on('callback_query', (query)=>{
             let chatId = query.message.chat.id;

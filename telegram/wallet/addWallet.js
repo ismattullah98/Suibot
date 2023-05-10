@@ -60,19 +60,11 @@ let addWallet = {
 
         query.allusers.findOneUser(db,data,(err,result)=>{
             if(result){
-                //console.log(result)
-                //IF PREMIUM
-                if(result[0].premium == 1){
-                    let limitBeginer = 100
-                    bot.sendMessage(data.telegramId, 'Silahkan Masukan EVM wallet dan nama wallet (eth,bsc,polygon,etc). example: ')
-                }
-                //IF FREE USER
-                if(result[0].premium ===0){
-                    let limitBasic = 10
+                let limit = result[0].limit
                     //CHECK LIMIT
                     query.sui.findOneSui(db,data,(err,res)=>{
                         //IF LIMIT REACHED
-                        if(res.length>=limitBasic){
+                        if(res.length>=limit){
                             bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
 
                         }
@@ -107,10 +99,6 @@ let addWallet = {
                             })
                         }
                     })
-                    
-                    
-                    
-                }
             }
             if(err) throw err;
         })

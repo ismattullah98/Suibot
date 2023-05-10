@@ -1,5 +1,5 @@
 const { sui, evm, venom } = require("../../database/query")
-
+ 
 let showWallet = {
     evm: (db,bot,data)=>{
         evm.findAllEvm(db,data,(err,res)=>{
@@ -34,7 +34,7 @@ let showWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index+1}. ${r.namewallet || 'name Wallet'} : \n ${r.evmwallet}\n`
+                    message += `${index+1}. ${r.namewallet || 'unnamed Wallet'} : \n ${r.evmwallet}\n`
                 })
                 
                 bot.sendMessage(data.telegramId, message)
