@@ -9,7 +9,7 @@ let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
 const { showWallet } = require('./telegram/wallet/showWallet');
 const { addWallet } = require('./telegram/wallet/addWallet');
-var token = BOT_TOKEN.toString();
+var token = BOT_TOKEN
 const proxy = 'http://192.168.88.223:80'
 var bot = new TelegramBot(token, {polling: true});
 //Menu
