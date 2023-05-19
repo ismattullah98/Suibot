@@ -3,7 +3,7 @@ const io = require('socket.io-client');
 // Connect to MySQL database
 const connection = require('../database/database')
 // Connect to WebSocket for network1
-const socket1 = io('https://network1.infura.io/ws/v3/your-project-id');
+const socket1 = io('wss://mainnet.era.zksync.io/ws');
 socket1.on('connect', () => {
   console.log('Connected to network1 WebSocket!');
 });
