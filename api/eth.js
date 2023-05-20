@@ -15,25 +15,26 @@ const wallet = ['0x9A8025240Dad844214A854e5dF0651378F71c5aC']
 const subscription = web3.eth.net.isListening().then(()=>{
   console.log('terhubung ke Websocket');
   connection.query(q,(err,res)=>{
-    if(err){console.log('Gagal Mengambil Data')}
-    return res;
-  })
-  const addressesToMonitor = res.map(row=> row.emvwallet)
-   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
-    web3.eth.getTransaction(txHash, (err,txResult)=>{
-      if(!err && txHash && addressesToMonitor.includes(txResult.to.toLowerCase())){
-        console.log('transaksi masuk : ', txResult )
-      }
-    })
-    
-  }).on('err',(err)=>{
-      console.error('error websocket', err)
-    })
-
-}).catch((error)=>{
-  if(error){
-    console.log('tidak dapat terhubung ke websocket', error)
+    if(err){console.log('Gagal Mengambil Data')
+    return res;  
   }
+  const addressesToMonitor = res.map(row=> row.emvwallet)
+  web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
+   web3.eth.getTransaction(txHash, (err,txResult)=>{
+     if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
+       console.log('transaksi masuk : ', txResult )
+     }
+   })
+    }).on('error',(err)=>{
+        console.error('error websocket', err)
+      })  
+  })
+  }).catch((error)=>{
+    if(error){
+      console.log('tidak dapat terhubung ke websocket', error)
+    }
+
+
 })
 
 
