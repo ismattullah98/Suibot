@@ -174,7 +174,8 @@ let telegram = {
                 bot.sendMessage(chatId, 'Edit Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'editevmwallet'},
-                        {text: 'SUI',callback_data: 'editsuiwallet'}],
+                        {text: 'SUI',callback_data: 'editsuiwallet'},
+                        {text: 'VENOM',callback_data: 'editvenomwallet'}],
                         [{text: 'BACK', callback_data: 'backtomenuwallet'},
                          {text: 'CLOSE',callback_data: 'close'}],
                         [{text: 'Menu', callback_data: 'backtomenu'}]
@@ -195,14 +196,14 @@ let telegram = {
                 let data = {
                     telegramId: chatId
                 }
-                editWallet.sui(db,bot,data);
+                editWallet.suiDisplay(db,bot,data);
             }
             //EDIT VENOM WALLET
             if(selectedQuery.toString().toLowerCase() == 'editvenomwallet'){
                 let data = {
                     telegramId: chatId
                 }
-                editWallet.venom(db,bot,data);
+                editWallet.venomDisplay(db,bot,data);
             }
             //////////////// END OF MENU EDIT WALLET//////////////////////////////
 

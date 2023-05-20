@@ -3,56 +3,38 @@ const io = require('socket.io-client');
 // Connect to MySQL database
 const connection = require('../database/database')
 // Connect to WebSocket for network1
-const socket1 = io('wss://mainnet.era.zksync.io/ws');
-socket1.on('connect', () => {
-  console.log('Connected to network1 WebSocket!');
-});
+const Web3 = require('web3');
+const { showWallet } = require('../telegram/wallet/showWallet');
+// Inisialisasi provider Web3
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'));
+const url = 'wss://mainnet.infura.io/ws/v3/ec80a9cd5f204e4bb84fec2204615708'
 
-// Connect to WebSocket for network2
-const socket2 = io('https://network2.infura.io/ws/v3/your-project-id');
-socket2.on('connect', () => {
-  console.log('Connected to network2 WebSocket!');
-});
+const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`
+const wallet = ['0x9A8025240Dad844214A854e5dF0651378F71c5aC']
 
-// Define a function to query daftar wallet dari database setiap kali terjadi perubahan pada tabel wallet
-function subscribeToWalletChanges() {
-  connection.query(`SELECT evmwallet FROM ${tableEvm}`, (err, rows) => {
-    if (err) throw err;
+const subscription = web3.eth.net.isListening().then(()=>{
+  console.log('terhubung ke Websocket');
+  connection.query(q,(err,res)=>{
+    if(err){console.log('Gagal Mengambil Data')}
+    return res;
+  })
+  const addressesToMonitor = res.map(row=> row.emvwallet)
+   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
+    web3.eth.getTransaction(txHash, (err,txResult)=>{
+      if(!err && txHash && addressesToMonitor.includes(txResult.to.toLowerCase())){
+        console.log('transaksi masuk : ', txResult )
+      }
+    })
+    
+  }).on('err',(err)=>{
+      console.error('error websocket', err)
+    })
 
-    // Convert result rows to array of wallet addresses
-    const wallets = rows.map((row) => row.evmwallet);
-    console.log(wallets)
-    // Subscribe to new transactions on network1 for the wallets in the list
-    socket1.emit('subscribe', { method: 'eth_subscribe', params: ['newPendingTransactions', { address: wallets }] });
-    socket1.on('pendingTransactions', (txs) => {
-      console.log(`Received ${txs.length} new transactions from network1 for wallets ${wallets}!`);
+}).catch((error)=>{
+  if(error){
+    console.log('tidak dapat terhubung ke websocket', error)
+  }
+})
 
-      // Save transactions to MySQL database
-      txs.forEach((tx) => {
-        connection.query(`INSERT INTO transactions (network, hash, from_address, to_address, value) 
-          VALUES (?, ?, ?, ?, ?)`, ['network1', tx.hash, tx.from, tx.to, tx.value], (err) => {
-            if (err) throw err;
-            console.log(`Saved transaction ${tx.hash} to MySQL database!`);
-          });
-      });
-    });
 
-    // Subscribe to new transactions on network2 for the wallets in the list
-    socket2.emit('subscribe', { method: 'eth_subscribe', params: ['newPendingTransactions', { address: wallets }] });
-    socket2.on('pendingTransactions', (txs) => {
-      console.log(`Received ${txs.length} new transactions from network2 for wallets ${wallets}!`);
-
-      // Save transactions to MySQL database
-      txs.forEach((tx) => {
-        connection.query(`INSERT INTO transactions (network, hash, from_address, to_address, value) 
-          VALUES (?, ?, ?, ?, ?)`, ['network2', tx.hash, tx.from, tx.to, tx.value], (err) => {
-            if (err) throw err;
-            console.log(`Saved transaction ${tx.hash} to MySQL database!`);
-          });
-      });
-    });
-  });
-}
-
-// Call the function to subscribe to wallet changes and transactions
-subscribeToWalletChanges();
+module.exports = subscription;

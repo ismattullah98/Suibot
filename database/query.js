@@ -1,9 +1,9 @@
 require('dotenv').config()
 const crypto = require('crypto');
-const tableUsers = process.env.TABLEUSERS
-const tableSui = process.env.TABLE_W_SUI
-const tableEvm = process.env.TABLE_W_EVM
-const tableVenom = process.env.TABLE_W_VENOM
+const tableUsers = process.env.TABLE_USERS;
+const tableSui = process.env.TABLE_W_SUI;
+const tableEvm = process.env.TABLE_W_EVM;
+const tableVenom = process.env.TABLE_W_VENOM;
 let allusers = {
   findOneUser: (db,data,callback)=>{
     let find = `SELECT * FROM ${tableUsers} WHERE telegramid = ?`
@@ -43,9 +43,10 @@ let sui = {
   createOneSui: (db, data, callback) => {
     let randomBuffer = crypto.randomBytes(10)
     let randomString = randomBuffer.toString('hex')
+    let nameWallet = data.nameWallet
     let codeWallet = 'sui_'+ randomString;
     let create = `INSERT INTO ${tableSui} (id,telegramid,suiwallet,namewallet,codewallet) VALUES (?,?,?,?,?) `
-    db.query(create, ['',data.telegramId,data.suiWallet,''||data.nameWallet,codeWallet], callback)
+    db.query(create, ['',data.telegramId,data.suiWallet,nameWallet? nameWallet: '',codeWallet], callback)
   },
   updateOneSui: (db, data, callback) => {
     let update = "UPDATE sui SET suiwallet = ? WHERE telegramid = ?"
@@ -69,7 +70,7 @@ let evm = {
     let randomString = randomBuffer.toString('hex')
     let codeWallet = 'evm_'+ randomString
     let create = `INSERT INTO ${tableEvm} (id,telegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
-    db.query(create, ['',data.telegramId,data.evmWallet,''||data.nameWallet,codeWallet], callback)
+    db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet? data.nameWallet:'' ,codeWallet], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
     let create = `INSERT INTO ${tableEvm} (idtelegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
@@ -98,7 +99,7 @@ let venom = {
     let randomString = randomBuffer.toString('hex')
     let codeWallet = 'venom_'+randomString;
     let create = `INSERT INTO ${tableVenom} (id,telegramid,venomwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
-    db.query(create, ['',data.telegramId,data.venomWallet,''||data.nameWallet,codeWallet], callback)
+    db.query(create, ['',data.telegramId,data.venomWallet,data.nameWallet? data.nameWallet:'',codeWallet], callback)
   },
   updateOneVenom: (db, data, callback) => {
     let update = `UPDATE ${tableVenom} SET venomwallet = ? WHERE telegramid = ? and codewallet = ?`

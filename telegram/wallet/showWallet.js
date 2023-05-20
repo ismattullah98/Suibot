@@ -6,24 +6,25 @@ let showWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index+1}. ${r.namewallet || 'name Wallet'} : \n ${r.evmwallet}\n`
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n\`${r.evmwallet}\` \n`;
                 })
                 
-                bot.sendMessage(data.telegramId, message)
+                bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
             }
             //console.log(res);
             if(err) throw err;
         })
     },
     sui: (db,bot,data)=>{
-        sui.findOneSui(db,data,(err,res)=>{
+        sui.findAllSui(db,data,(err,res)=>{
             if(res){
+                console.log(res)
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index+1}. ${r.namewallet || 'name Wallet'} : \n ${r.evmwallet}\n`
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.suiwallet.slice(3, 5)+'..'+ r.suiwallet.slice(-2)} :\n\`${r.suiwallet}\` \n`;
                 })
                 
-                bot.sendMessage(data.telegramId, message)
+                bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
             }
             //console.log(res);
             if(err) throw err;
@@ -34,10 +35,10 @@ let showWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index+1}. ${r.namewallet || 'unnamed Wallet'} : \n ${r.evmwallet}\n`
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.venomwallet.slice(3, 5)+'..'+ r.venomwallet.slice(-2)} :\n\`${r.evmwallet}\` \n`;
                 })
                 
-                bot.sendMessage(data.telegramId, message)
+                bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
             }
             //console.log(res);
             if(err) throw err;

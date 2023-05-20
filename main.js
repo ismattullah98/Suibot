@@ -1,7 +1,7 @@
-require('./telegram/menu')
+
 require('dotenv').config();
 const request = require('request');
-const api = require('./api/sui');
+const api = require('./api/eth');
 const db = require('./database/database')
 const query = require('./database/query')
 const tele = require('./telegram/menu')
@@ -9,8 +9,7 @@ let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
 const { showWallet } = require('./telegram/wallet/showWallet');
 const { addWallet } = require('./telegram/wallet/addWallet');
-var token = BOT_TOKEN
-const proxy = 'http://192.168.88.223:80'
+var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
 //Menu
 
@@ -60,9 +59,16 @@ isRecording= true
 });
 
 //EditWallet 
-bot.onText(/\/edit/+'sui',(msg)=>{
+bot.onText(/\/edit_(\w+)/, (msg, match) => {
+  const chatId = msg.chat.id;
+  const code = match[1]; // Mendapatkan kode dari grup penangkapan (\w+)
 
-})
+  // Ambil data dari database berdasarkan kode yang diperoleh
+  // Contoh: Mengambil data dari database berdasarkan kode dan melakukan tindakan lain sesuai kebutuhan Anda
+
+  // Kirim pesan balasan ke pengguna
+  bot.sendMessage(chatId, `Perintah edit dengan kode: ${code}`);
+});
 //view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
   data = {
@@ -111,7 +117,7 @@ bot.on('callback_query', (query) => {
   }
   //Testnet
   if(selectedNetwork == 'testnet'){
-  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
+  bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. `Wait A Second 🐒`', {parse_mode: 'Markdown'});
   //testnet
   bot.deleteMessage(chatId, query.message.message_id);  
   }

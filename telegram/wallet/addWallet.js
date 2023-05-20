@@ -8,7 +8,7 @@ let addWallet = {
             if(result){
                     let limit = result[0].limit
                     //CHECK LIMIT
-                    query.evm.findOneEvm(db,data,(err,res)=>{
+                    query.evm.findAllEvm(db,data,(err,res)=>{
                         //IF LIMIT REACHED
                         if(res.length>=limit){
                             bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
@@ -62,15 +62,15 @@ let addWallet = {
             if(result){
                 let limit = result[0].limit
                     //CHECK LIMIT
-                    query.sui.findOneSui(db,data,(err,res)=>{
+                    query.sui.findAllSui(db,data,(err,res)=>{
                         //IF LIMIT REACHED
                         if(res.length>=limit){
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
 
                         }
                         //IF NO LIMIT
                         else{
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\nSilahkan Masukan SUI wallet anda`);
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\nSilahkan Masukan SUI wallet anda`);
                             isRecording= true;
                             bot.on('message',(msg)=>{
                             let data = {
@@ -110,25 +110,17 @@ let addWallet = {
 
         query.allusers.findOneUser(db,data,(err,result)=>{
             if(result){
-                //console.log(result)
-                //IF PREMIUM
-                if(result[0].premium == 1){
-                    let limitBeginer = 100
-                    bot.sendMessage(data.telegramId, 'Silahkan Masukan VENOM wallet dan nama wallet example: 0:...8a .')
-                }
-                //IF FREE USER
-                if(result[0].premium ===0){
-                    let limitBasic = 10
+                let limit = result[0].limit
                     //CHECK LIMIT
                     query.venom.findOneVenom(db,data,(err,res)=>{
                         //IF LIMIT REACHED
-                        if(res.length>=limitBasic){
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
+                        if(res.length>=limit){
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\n Anda Sudah Mencapai LIMIT,tidak dapat lagi menambah Wallet`);
 
                         }
                         //IF NO LIMIT
                         else{
-                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limitBasic})\nSilahkan Masukan Venom wallet anda`);
+                            bot.sendMessage(data.telegramId, `Limit wallet (${res.length}/${limit})\nSilahkan Masukan Venom wallet anda`);
                             isRecording= true;
                             bot.on('message',(msg)=>{
                             let data = {
@@ -160,7 +152,7 @@ let addWallet = {
                     
                     
                     
-                }
+                
             }
             if(err) throw err;
         })
