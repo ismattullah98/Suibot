@@ -2,11 +2,10 @@ const mysql = require('mysql');
 const io = require('socket.io-client');
 // Connect to MySQL database
 const connection = require('../database/database')
-// Connect to WebSocket for network1
 const Web3 = require('web3');
 const { showWallet } = require('../telegram/wallet/showWallet');
 // Inisialisasi provider Web3
-const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'));
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'))
 const url = 'wss://mainnet.infura.io/ws/v3/ec80a9cd5f204e4bb84fec2204615708'
 
 const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`
