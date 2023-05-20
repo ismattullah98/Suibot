@@ -17,7 +17,7 @@ const subscription = web3.eth.net.isListening().then(()=>{
     if(err){console.log('Gagal Mengambil Data')
     return res;  
   }
-  const addressesToMonitor = res.map(row=> row.emvwallet)
+  const addressesToMonitor = res.map(row=> row.evmwallet)
   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
    web3.eth.getTransaction(txHash, (err,txResult)=>{
      if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
