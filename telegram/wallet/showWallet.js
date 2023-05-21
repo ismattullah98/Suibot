@@ -3,13 +3,15 @@ const { sui, evm, venom } = require("../../database/query")
 let showWallet = {
     evm: (db,bot,data)=>{
         evm.findAllEvm(db,data,(err,res)=>{
-            if(res){
+            if(res > 0){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
                     message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n\`${r.evmwallet}\` \n`;
                 })
                 
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
+            }if(res == 0){
+              bot.sendMessage(data.telegramId, 'Belum ada Wallet yang di Tambahkan')
             }
             //console.log(res);
             if(err) throw err;
