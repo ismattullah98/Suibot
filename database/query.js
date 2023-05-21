@@ -69,7 +69,7 @@ let evm = {
     let randomBuffer = crypto.randomBytes(10)
     let randomString = randomBuffer.toString('hex')
     let codeWallet = 'evm_'+ randomString
-    let create = `INSERT INTO ${tableEvm} (id,telegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
+    let create = 'INSERT INTO `'+tableEvm+'` (`id`,`telegramid`,`evmwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?,?)'
     db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet? data.nameWallet:'' ,codeWallet], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
