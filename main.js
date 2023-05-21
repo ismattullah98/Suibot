@@ -25,7 +25,7 @@ bot.onText(/\/start/, (msg) => {
     telegramId: msg.chat.id
   }
   query.allusers.findOneUser(db,data,(err,res)=>{
-    if(res == 0){
+    if(!res){
       query.allusers.createOneUser(db,msg.chat.id,(err,result)=>{
         if(err) throw err;
         if(result){
@@ -33,7 +33,7 @@ bot.onText(/\/start/, (msg) => {
           bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang ');
         }
       })
-    }if(res == 1){
+    }if(res){
       console.log(msg)
       bot.sendMessage(msg.chat.id, `yoo,welcome back ${msg.chat.first_name} Dancuk!!!`)
     }
