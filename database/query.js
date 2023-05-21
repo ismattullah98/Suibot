@@ -69,20 +69,20 @@ let evm = {
     let randomBuffer = crypto.randomBytes(10)
     let randomString = randomBuffer.toString('hex')
     let codeWallet = 'evm_'+ randomString
-    let create = 'INSERT INTO `'+tableEvm+'` (`id`,`telegramid`,`evmwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?,?)'
-    db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet? data.nameWallet:'' ,codeWallet], callback)
+    let create = 'INSERT INTO `'+tableEvm+'` (`telegramid`,`evmwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?)'
+    db.query(create, [data.telegramId,data.evmWallet,data.nameWallet? data.nameWallet:'' ,codeWallet], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
-    let create = `INSERT INTO ${tableEvm} (idtelegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
+    let create = `INSERT INTO ${tableEvm} (id,telegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
     db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet], callback)
   },
   //UPDATE
   updateOneEvm: (db, data, callback) => {
-    let update = `UPDATE ${tableEvm} SET evmwallet = ? WHERE telegramid = ?`
+    let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ?'
     db.query(update, [data.evmWallet,data.telegramid], callback)
   },
   updateOneEvmPremium: (db, data, callback) => {
-    let update = `UPDATE ${tableEvm} SET evmwallet = ? WHERE telegramid = ? AND codewallet = ?`
+    let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ? AND `codewallet` = ?'
     db.query(update, [data.telegramid,data.evmwallet,data.codeWallet], callback)
   },
 }
