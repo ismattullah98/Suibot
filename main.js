@@ -31,10 +31,9 @@ bot.onText(/\/start/, (msg) => {
         if(result){
           console.log(result); 
           bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang ');
-
         }
       })
-    }if(res.length == 1){
+    }if(res.length === 1){
       console.log(msg)
       bot.sendMessage(msg.chat.id, `yoo,welcome back ${msg.chat.first_name} Dancuk!!!`)
     }
