@@ -6,7 +6,7 @@ const tableEvm = process.env.TABLE_W_EVM;
 const tableVenom = process.env.TABLE_W_VENOM;
 let allusers = {
   findOneUser: (db,data,callback)=>{
-    let find = `SELECT * FROM ${tableUsers} WHERE telegramid = ?`
+    let find = 'SELECT * FROM `'+tableUsers+'` WHERE `telegramid` = ?'
     db.query(find,data.telegramId,callback);
   },
   createOneUser: (db,data,callback)=>{
