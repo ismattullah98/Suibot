@@ -17,7 +17,7 @@ let allusers = {
       limit: 10,
     }
     let create = 'INSERT INTO `'+tableUsers+'` (`telegramid`,`premium`,`limit`) VALUES (?,?,?); '
-    db.query(create, [Dinput.id, Dinput.telegramid, Dinput.premium, Dinput.limit], callback);
+    db.query(create, [ Dinput.telegramid, Dinput.premium, Dinput.limit], callback);
 
   },
   updateOneUser: (db,data,callback)=>{
