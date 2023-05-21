@@ -57,7 +57,7 @@ let sui = {
 let evm = {
   //FIND
   findAllEvm:(db,data,callback)=>{
-    let findAll = `SELECT * FROM ${tableEvm} WHERE telegramid = ?`
+    let findAll = 'SELECT * FROM `'+tableEvm+'` WHERE `telegramid` = ?'
     db.query(findAll,data.telegramId,callback)
   },
   findOneEvmByWallet:(db,data,callback)=>{
