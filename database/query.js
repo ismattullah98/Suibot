@@ -11,7 +11,7 @@ let allusers = {
   },
   createOneUser: (db,data,callback)=>{
     let Dinput = {
-      id: '',
+      id: 1,
       telegramid: data,
       premium: 0,
       limit: 10,
