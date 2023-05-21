@@ -33,7 +33,7 @@ bot.onText(/\/start/, (msg) => {
           bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang ');
         }
       })
-    }if(res.length === 1){
+    }if(res == 1){
       console.log(msg)
       bot.sendMessage(msg.chat.id, `yoo,welcome back ${msg.chat.first_name} Dancuk!!!`)
     }
