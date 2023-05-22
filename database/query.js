@@ -31,12 +31,12 @@ let allusers = {
 //SUI QUERY
 let sui = {
   findOneSui: (db, data, callback) => {
-    let find = `SELECT * FROM ${tableSui} WHERE telegramid = ? and codewallet = ?`
+    let find = 'SELECT * FROM `'+tableSui+'` WHERE `telegramid` = ? and `codewallet` = ?'
     db.query(find, [data.telegramId,data.codeWallet], callback)
 
   },
   findAllSui: (db, data, callback) => {
-    let find = `SELECT * FROM ${tableSui} WHERE telegramid = ?`
+    let find = 'SELECT * FROM `'+tableSui+'` WHERE `telegramid` = ?'
     db.query(find, data.telegramId, callback)
 
   },
@@ -45,12 +45,12 @@ let sui = {
     let randomString = randomBuffer.toString('hex')
     let nameWallet = data.nameWallet
     let codeWallet = 'sui_'+ randomString;
-    let create = `INSERT INTO ${tableSui} (id,telegramid,suiwallet,namewallet,codewallet) VALUES (?,?,?,?,?) `
-    db.query(create, ['',data.telegramId,data.suiWallet,nameWallet? nameWallet: '',codeWallet], callback)
+    let create = 'INSERT INTO `'+tableSui+'` (`telegramid`, `suiwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?) `
+    db.query(create, [data.telegramId,data.suiWallet,nameWallet? nameWallet: '',codeWallet], callback)
   },
   updateOneSui: (db, data, callback) => {
-    let update = "UPDATE sui SET suiwallet = ? WHERE telegramid = ?"
-    db.query(update, data, callback)
+    let update = 'UPDATE `'+tableSui+'` SET `suiwallet` = ? WHERE `telegramid` = ?'
+    db.query(update, [data.suiWallet, data.telegramId], callback)
   },
 }
 //EVM QUERY
@@ -61,7 +61,7 @@ let evm = {
     db.query(findAll,data.telegramId,callback)
   },
   findOneEvmByWallet:(db,data,callback)=>{
-    let find = `SELECT * FROM ${tableEvm} WHERE telegramid = ? AND evmwallet = ?`
+    let find = 'SELECT * FROM `'+tableEvm+'` WHERE `telegramid` = ? AND `evmwallet` = ?'
     db.query(find,[data.telegramId,data.evmWallet],callback)
   },
   //CREATE
@@ -73,8 +73,8 @@ let evm = {
     db.query(create, [data.telegramId,data.evmWallet,data.nameWallet? data.nameWallet:'' ,codeWallet], callback)
   },
   createOneEvmPremium: (db, data, callback) => {
-    let create = `INSERT INTO ${tableEvm} (id,telegramid,evmwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
-    db.query(create, ['',data.telegramId,data.evmWallet,data.nameWallet], callback)
+    let create = 'INSERT INTO `'+tableEvm+'` (`telegramid`, `evmwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?)'
+    db.query(create, [data.telegramId,data.evmWallet,data.nameWallet], callback)
   },
   //UPDATE
   updateOneEvm: (db, data, callback) => {
@@ -90,7 +90,7 @@ let evm = {
 //VENOM QUERY
 let venom = {
   findOneVenom: (db, data, callback) => {
-    let find = `SELECT * FROM ${tableVenom} WHERE telegramid = ?`
+    let find = 'SELECT * FROM `'+tableVenom+'` WHERE `telegramid` = ?'
     db.query(find, data.telegramId, callback)
 
   },
@@ -98,11 +98,11 @@ let venom = {
     let randomBuffer = crypto.randomBytes(10)
     let randomString = randomBuffer.toString('hex')
     let codeWallet = 'venom_'+randomString;
-    let create = `INSERT INTO ${tableVenom} (id,telegramid,venomwallet,namewallet,codewallet) VALUES (?,?,?,?,?)`
-    db.query(create, ['',data.telegramId,data.venomWallet,data.nameWallet? data.nameWallet:'',codeWallet], callback)
+    let create = 'INSERT INTO `'+tableVenom+'` (`telegramid`, `venomwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?)'
+    db.query(create, [data.telegramId,data.venomWallet,data.nameWallet? data.nameWallet:'',codeWallet], callback)
   },
   updateOneVenom: (db, data, callback) => {
-    let update = `UPDATE ${tableVenom} SET venomwallet = ? WHERE telegramid = ? and codewallet = ?`
+    let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?`
     db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
   },
 }

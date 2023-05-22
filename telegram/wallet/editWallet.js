@@ -9,7 +9,7 @@ let editWallet = {
                 console.log(res[0].codewallet)
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n \`${r.evmwallet}\` /edit\\_${r.codewallet.replace('_', '\\_')} \n `;
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n \`${r.evmwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n `;
                 })
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
             }
