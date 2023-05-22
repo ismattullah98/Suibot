@@ -7,7 +7,7 @@ const { showWallet } = require('../telegram/wallet/showWallet');
 // Inisialisasi provider Web3
 const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'))
 const url = 'wss://mainnet.infura.io/ws/v3/ec80a9cd5f204e4bb84fec2204615708'
-
+ 
 const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`
 const wallet = ['0x9A8025240Dad844214A854e5dF0651378F71c5aC']
 
