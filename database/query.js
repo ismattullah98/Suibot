@@ -53,8 +53,8 @@ let sui = {
     db.query(update, [data.suiWallet, data.telegramId], callback)
   },
   deleteOneSui: (db,data,callback)=>{
-    let delete = ''
-      db.query(delete,[data.telegramId, data.codeWallet], callback)
+    let del = ''
+      db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }
 //EVM QUERY
@@ -90,8 +90,8 @@ let evm = {
     db.query(update, [data.telegramid,data.evmwallet,data.codeWallet], callback)
   },
   deleteOneEvm: (db,data,callback)=>{
-    let delete = ''
-      db.query(delete,[data.telegramId, data.codeWallet], callback)
+    let del = 'Delete'
+      db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }
 
@@ -114,8 +114,8 @@ let venom = {
     db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
   },
   deleteOneVenom: (db,data,callback)=>{
-    let delete = ''
-      db.query(delete,[data.telegramId, data.codeWallet], callback)
+    let del = ''
+      db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }
 
