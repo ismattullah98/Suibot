@@ -37,7 +37,7 @@ let showWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index + 1}. ${r.namewallet || '0x'+r.venomwallet.slice(3, 5)+'..'+ r.venomwallet.slice(-2)} :\n\`${r.evmwallet}\` \n`;
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.venomwallet.slice(3, 5)+'..'+ r.venomwallet.slice(-2)} :\n\`${r.venomwallet}\` \n`;
                 })
                 
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
