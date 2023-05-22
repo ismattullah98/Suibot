@@ -98,7 +98,7 @@ let telegram = {
                 bot.sendMessage(chatId, 'Show Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'showevmwallet'},
-                         {text: 'SUI',callback_data: 'showsuiwallet'}],
+                         {text: 'SUI',callback_data: 'showsuiwallet'},{text: 'VENOM',callback_data: 'showvenomwallet'}],
                         [{text: 'BACK',callback_data: 'backtomenuwallet'},
                          {text: 'CLOSE',callback_data: 'close'}],
                         [{text: 'Menu', callback_data: 'backtomenu'}]
