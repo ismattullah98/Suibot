@@ -20,7 +20,8 @@ const subscription = web3.eth.net.isListening().then(()=>{
   const addressesToMonitor = res.map(row=> row.evmwallet)
   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
    web3.eth.getTransaction(txHash, (err,txResult)=>{
-     console.log(parseInt(txResult.value)/ 10**18)
+     txValue= parseInt(txResult.value) / 10**18
+     console.log()
      if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
        const weiValue = txResult.value;
        const etherValue = parseInt(weiValue) / 10**18;
