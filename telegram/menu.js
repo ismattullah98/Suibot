@@ -11,10 +11,10 @@ let telegram = {
                 reply_markup:{
                     inline_keyboard: [
                         [
-                            {text: 'Wallet',callback_data: 'wallet',scale: 0.5},
-                            {text: 'Coin/Token price',callback_data: 'coinprice', scale: 0.5}
+                            {text: '💼 Wallet',callback_data: 'wallet',scale: 0.5},
+                            {text: '🔎 Coin/Token price ',callback_data: 'coinprice', scale: 0.5}
                         ],
-                        [{text: 'Get Premium',callback_data: 'premium', scale: 1}],
+                        [{text: '💎 Get Premium',callback_data: 'premium', scale: 1}],
                         [{text: 'CLOSE',callback_data: 'close'}]
 
                     ]
