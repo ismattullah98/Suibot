@@ -21,7 +21,7 @@ const subscription = web3.eth.net.isListening().then(()=>{
   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
    web3.eth.getTransaction(txHash, (err,txResult)=>{
      txValue= parseInt(txResult[1].value) / 10**18
-     console.log()
+     console.log(txValue)
      if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
        const weiValue = txResult.value;
        const etherValue = parseInt(weiValue) / 10**18;
