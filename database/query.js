@@ -102,7 +102,7 @@ let venom = {
     db.query(create, [data.telegramId,data.venomWallet,data.nameWallet? data.nameWallet:'',codeWallet], callback)
   },
   updateOneVenom: (db, data, callback) => {
-    let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?`
+    let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?'
     db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
   },
 }
