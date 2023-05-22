@@ -20,6 +20,7 @@ const subscription = web3.eth.net.isListening().then(()=>{
   const addressesToMonitor = res.map(row=> row.evmwallet)
   web3.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
    web3.eth.getTransaction(txHash, (err,txResult)=>{
+     console.log(txResult)
      if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
        console.log('transaksi masuk : ', txResult )
      }

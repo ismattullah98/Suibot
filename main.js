@@ -59,12 +59,17 @@ isRecording= true
 
 //EditWallet 
 bot.onText(/\/edit_(\w+)/, (msg, match) => {
-  const chatId = msg.chat.id;
-  const code = match[1]; // Mendapatkan kode dari grup penangkapan (\w+)
-
-  // Ambil data dari database berdasarkan kode yang diperoleh
-  // Contoh: Mengambil data dari database berdasarkan kode dan melakukan tindakan lain sesuai kebutuhan Anda
-
+    const chatId = msg.chat.id;
+    const code = match[1];
+    if(code == 'evm'){
+    
+    }
+    if(){
+      
+    }
+    if(){
+      
+    }
   // Kirim pesan balasan ke pengguna
   bot.sendMessage(chatId, `Perintah edit dengan kode: ${code}`);
 });

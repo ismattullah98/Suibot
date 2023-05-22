@@ -52,6 +52,10 @@ let sui = {
     let update = 'UPDATE `'+tableSui+'` SET `suiwallet` = ? WHERE `telegramid` = ?'
     db.query(update, [data.suiWallet, data.telegramId], callback)
   },
+  deleteOneSui: (db,data,callback)=>{
+    let delete = ''
+      db.query(delete,[data.telegramId, data.codeWallet], callback)
+  }
 }
 //EVM QUERY
 let evm = {
@@ -85,6 +89,10 @@ let evm = {
     let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ? AND `codewallet` = ?'
     db.query(update, [data.telegramid,data.evmwallet,data.codeWallet], callback)
   },
+  deleteOneEvm: (db,data,callback)=>{
+    let delete = ''
+      db.query(delete,[data.telegramId, data.codeWallet], callback)
+  }
 }
 
 //VENOM QUERY
@@ -105,6 +113,10 @@ let venom = {
     let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?'
     db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
   },
+  deleteOneVenom: (db,data,callback)=>{
+    let delete = ''
+      db.query(delete,[data.telegramId, data.codeWallet], callback)
+  }
 }
 
 module.exports =  {sui,evm,venom,allusers};
