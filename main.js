@@ -61,14 +61,14 @@ isRecording= true
 bot.onText(/\/edit_(\w+)/, (msg, match) => {
     const chatId = msg.chat.id;
     const code = match[1];
-    if(code == 'evm'){
-    
+    if(code.slice(0,4) ==='evm_'){
+      //evm
     }
-    if(){
-      
+    if(code.slice(0,4 === 'sui_')){
+      //sui
     }
-    if(){
-      
+    if(code.slice(0,6) === 'venom_'){
+      //venom
     }
   // Kirim pesan balasan ke pengguna
   bot.sendMessage(chatId, `Perintah edit dengan kode: ${code}`);
