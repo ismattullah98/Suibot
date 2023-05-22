@@ -45,7 +45,7 @@ let sui = {
     let randomString = randomBuffer.toString('hex')
     let nameWallet = data.nameWallet
     let codeWallet = 'sui_'+ randomString;
-    let create = 'INSERT INTO `'+tableSui+'` (`telegramid`, `suiwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?) `
+    let create = 'INSERT INTO `'+tableSui+'` (`telegramid`, `suiwallet`, `namewallet`, `codewallet`) VALUES (?,?,?,?) '
     db.query(create, [data.telegramId,data.suiWallet,nameWallet? nameWallet: '',codeWallet], callback)
   },
   updateOneSui: (db, data, callback) => {
