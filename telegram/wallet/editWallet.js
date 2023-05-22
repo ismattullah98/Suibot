@@ -9,7 +9,7 @@ let editWallet = {
                 console.log(res[0].codewallet)
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n \`${r.evmwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n `;
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n \`${r.evmwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n\n `;
                 })
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
             }
@@ -25,7 +25,7 @@ let editWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index + 1}. ${r.namewallet || '0x'+r.suiwallet.slice(3, 5)+'..'+ r.suiwallet.slice(-2)} :\n\`${r.suiwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n`;
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.suiwallet.slice(3, 5)+'..'+ r.suiwallet.slice(-2)} :\n\`${r.suiwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n\n`;
                 })
                 
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
@@ -43,7 +43,7 @@ let editWallet = {
             if(res){
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
-                    message += `${index + 1}. ${r.namewallet || '0x'+r.venomwallet.slice(3, 5)+'..'+ r.venomwallet.slice(-2)} :\n\`${r.venomwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n`;
+                    message += `${index + 1}. ${r.namewallet || '0x'+r.venomwallet.slice(3, 5)+'..'+ r.venomwallet.slice(-2)} :\n\`${r.venomwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n \n`;
                 })
                 
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'}) 
