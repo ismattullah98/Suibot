@@ -30,7 +30,7 @@ function startSubscriptions(bot) {
           return;
         }
         const addressesToMonitor = res.map(row => row.evmwallet.toLowerCase());
-        startTransactionMonitoring(web3, addressesToMonitor, providerName.name);
+        startTransactionMonitoring(web3, addressesToMonitor, providerName,bot);
       });
     }).catch((error) => {
       console.log(`Tidak dapat terhubung ke websocket ${providerName.name}`, error);
@@ -41,7 +41,7 @@ function startSubscriptions(bot) {
 }
 
 // Fungsi untuk memulai pemantauan transaksi pada jaringan blockchain tertentu
-function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
+function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) {
   // web3.eth.subscribe('pendingTransactions')
   //   .on('data', txHash => {
   //     web3.eth.getTransaction(txHash, (err, txResult) => {
@@ -61,7 +61,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
         block.transactions.forEach(tx => {
           let wallet = addressesToMonitor.includes(tx.to.toLowerCase())
           if (wallet) {
-            subEvm.findByWalet(wallet,tx)
+            subEvm.findByWalet(wallet,tx,bot)
             console.log(`Transaksi masuk di ${providerName.name}:`, tx);
           }
         });
