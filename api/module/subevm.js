@@ -14,11 +14,14 @@ let subEvm = {
             if(err) throw err;
             
             if(res.length>1){
-                //res.map()
+                res.map(row => {
+                    let message = 'transaksi Masuk:'+tx
+                    bot.sendMessage(row.telegramid,message)
+                  });
             }
             if(res.length == 1){
                 let message = 'transaksi masuk: '+tx
-                bot.sendMessage(res.telegramid, message);
+                bot.sendMessage(res[0].telegramid, message);
             }
         })
     }
