@@ -15,8 +15,8 @@ blast.wsProvider.eth.net.isListening((err,res)=>{
     console.log(res);
 })
 let blastProvider = [
-     blast.wsProvider(process.env.WSS_ARB_TEST),
-     blast.wsProvider(process.env.WSS_ARB),
+    //  blast.wsProvider(process.env.WSS_ARB_TEST),
+    //  blast.wsProvider(process.env.WSS_ARB),
     
 ];
 
