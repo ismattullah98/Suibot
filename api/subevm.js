@@ -11,7 +11,7 @@ const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`;
 const web3Providers = [
   new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'), // Websocket provider for mainnet
   new Web3.providers.WebsocketProvider('wss://testnet.era.zksync.dev/ws'), // Websocket provider for Rinkeby testnet
-  new Web3.providers.WebsocketProvider(process.env.WSS_ARB),// Websocket provider for Rinkeby testnet
+  new Web3.providers.WebsocketProvider('wss://arb1.arbitrum.io/feed'),// Websocket provider for Rinkeby testnet
   new Web3.providers.WebsocketProvider(process.env.WSS_OP), // Websocket provider for Rinkeby testnet
   // Add more Websocket providers for other blockchains here
 ];
