@@ -1,9 +1,7 @@
-var TelegramBot = require('node-telegram-bot-api');
+
 const connection = require("../../database/database")
 const { evm } = require("../../database/query")
-let BOT_TOKEN = process.env.BOT_TOKEN;
-var token = BOT_TOKEN;
-var bot = new TelegramBot(token, {polling: true});
+
 
 let subEvm = {
     findByWalet: (wallet,tx)=>{
@@ -18,7 +16,7 @@ let subEvm = {
             }
             if(res.length == 1){
                 let message = 'transaksi masuk'+tx
-                bot.sendMessage(res.telegramid, message);
+                //bot.sendMessage(res.telegramid, message);
             }
         })
     }
