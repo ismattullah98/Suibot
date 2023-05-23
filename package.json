@@ -10,6 +10,7 @@
   "author": "ismattullah98",
   "license": "MIT",
   "dependencies": {
+    "@bwarelabs/blast-sdk-js": "^1.0.14",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "mysql": "^2.18.1",

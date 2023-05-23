@@ -1,7 +1,8 @@
 
 require('dotenv').config();
 //const request = require('request');
-const api = require('./api/subevm');
+const apiWeb3 = require('./api/subevm');
+apiBlast = require('./api/blastapi/blastevm')
 const db = require('./database/database')
 const query = require('./database/query')
 const tele = require('./telegram/menu')
@@ -9,13 +10,14 @@ let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
 const { showWallet } = require('./telegram/wallet/showWallet');
 const { addWallet } = require('./telegram/wallet/addWallet');
+const { subscribe } = require('./api/blastapi/blastevm');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
 //Menu
-
 tele.telegram.menu(bot);
 tele.telegram.callbackQuery(bot);
-api.startSubscriptions(bot);
+//Subscribe WEB3
+apiWeb3.startSubscriptions(bot);
 //Set-Up sui wallet
 let isRecording = false;
 let walletAddress = '';

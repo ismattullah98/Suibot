@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 const connection = require('../database/database');
 const Web3 = require('web3');
 const { showWallet } = require('../telegram/wallet/showWallet');
-const { subEvm } = require('./module/subevm');
+const { subEvm } = require('./web3/subevm');
  
 const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`;
 
