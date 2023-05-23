@@ -30,7 +30,7 @@ function startSubscriptions(bot) {
           return;
         }
         const addressesToMonitor = res.map(row => row.evmwallet.toLowerCase());
-        startTransactionMonitoring(web3, addressesToMonitor, providerName.name);
+        startTransactionMonitoring(web3, addressesToMonitor, providerName.name,bot);
       });
     }).catch((error) => {
       console.log(`Tidak dapat terhubung ke websocket ${providerName.name}`, error);
@@ -92,6 +92,6 @@ function getProviderName(index) {
 }
 
 // Memulai langganan untuk setiap jaringan blockchain
-startSubscriptions();
+//startSubscriptions();
 
-module.exports = { subscriptions };
+module.exports = { subscriptions, startSubscriptions };

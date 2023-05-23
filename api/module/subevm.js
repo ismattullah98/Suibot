@@ -4,7 +4,7 @@ const { evm } = require("../../database/query")
 
 
 let subEvm = {
-    findByWalet: (wallet,tx)=>{
+    findByWalet: (wallet,tx,bot)=>{
         let data = {
             evmWallet: wallet
         }
@@ -16,7 +16,7 @@ let subEvm = {
             }
             if(res.length == 1){
                 let message = 'transaksi masuk'+tx
-                //bot.sendMessage(res.telegramid, message);
+                bot.sendMessage(res.telegramid, message);
             }
         })
     }

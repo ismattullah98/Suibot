@@ -15,7 +15,7 @@ var bot = new TelegramBot(token, {polling: true});
 
 tele.telegram.menu(bot);
 tele.telegram.callbackQuery(bot);
-
+api.startSubscriptions(bot);
 //Set-Up sui wallet
 let isRecording = false;
 let walletAddress = '';
