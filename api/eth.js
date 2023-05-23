@@ -19,9 +19,10 @@ const subscription = zkera.eth.net.isListening().then(()=>{
   console.log('terhubung ke Websocket');
   
   const addressesToMonitor = res.map(row=> row.evmwallet)
+  console.log(addressesToMonitor)
   zkera.eth.subscribe('pendingTransactions').on('data',(txHash)=>{
    zkera.eth.getTransaction(txHash, (err,txResult)=>{
-     console.log(txResult)
+    // console.log(txResult)
      if(!err && txResult && addressesToMonitor.includes(txResult.to.toLowerCase())){
        /*const weiValue = txResult.value;
        const etherValue = parseInt(weiValue) / 10**18;
