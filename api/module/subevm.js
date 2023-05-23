@@ -16,7 +16,7 @@ let subEvm = {
             
             if(res.length>1){
                 res.map(row => {
-                    message+= `-${providerName.name} \n <a href=${providerName.explorer}tx/${tx.hash}>txHash<a>`
+                    message+= `-${providerName.name} \n <a href=${providerName.explorer}tx/${tx.hash}>txHash</a>`
                     bot.sendMessage(row.telegramid,message,{parse_mode: 'HTML'})
                   });
             }
