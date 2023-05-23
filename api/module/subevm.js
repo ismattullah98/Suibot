@@ -5,10 +5,12 @@ const { evm } = require("../../database/query")
 
 let subEvm = {
     findByWalet: (wallet,tx,bot)=>{
+        console.log(wallet)
         let data = {
             evmWallet: wallet
         }
         evm.findOneEvmByWallet(connection, data, (err,res)=>{
+            console.log(res)
             if(err) throw err;
             
             if(res.length>1){
