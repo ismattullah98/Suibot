@@ -10,7 +10,10 @@ let config = {
 let blast = new Blast(config)
 
 let subscribe = [];
-
+blast.wsProvider.eth.net.isListening((err,res)=>{
+    if(err) throw err;
+    console.log(res);
+})
 let blastProvider = [
      blast.wsProvider(process.env.WSS_ARB_TEST),
      blast.wsProvider(process.env.WSS_ARB),
