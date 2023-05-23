@@ -23,8 +23,8 @@ function startSubscriptions(bot) {
   for (let i = 0; i < web3Providers.length; i++) {
     const web3 = new Web3(web3Providers[i]);
     const providerName = getProviderName(i); // Mendapatkan nama jaringan blockchain berdasarkan indeks
-
-    const subscription = web3.net.isListening().then(() => {
+    
+    const subscription = web3.eth.net.isListening().then(() => {
       console.log(`Terhubung ke Websocket ${providerName.name}`);
       connection.query(q, (err, res) => {
         if (err) {
