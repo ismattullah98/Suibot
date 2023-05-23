@@ -9,7 +9,7 @@ const q = `SELECT evmwallet, blockchain FROM ${process.env.TABLE_W_EVM}`;
 
 const web3Providers = [
   new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'), // Websocket provider for mainnet
-  new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/ec80a9cd5f204e4bb84fec2204615708') // Websocket provider for Rinkeby testnet
+  new Web3.providers.WebsocketProvider('wss://testnet.era.zksync.dev/ws') // Websocket provider for Rinkeby testnet
   // Add more Websocket providers for other blockchains here
 ];
 
@@ -76,7 +76,7 @@ function getProviderName(index) {
     case 0:
       return 'ZkSync Mainnet';
     case 1:
-      return 'Rinkeby Testnet';
+      return 'ZKSync Testnet';
     // Add more provider names for other blockchains here
     default:
       return `Blockchain-${index}`;
