@@ -30,7 +30,7 @@ function startSubscriptions(bot) {
           return;
         }
         const addressesToMonitor = res.map(row => row.evmwallet.toLowerCase());
-        startTransactionMonitoring(web3, addressesToMonitor, providerName.name,bot);
+        startTransactionMonitoring(web3, addressesToMonitor, providerName.name);
       });
     }).catch((error) => {
       console.log(`Tidak dapat terhubung ke websocket ${providerName.name}`, error);
