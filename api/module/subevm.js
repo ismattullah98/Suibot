@@ -16,12 +16,22 @@ let subEvm = {
             
             if(res.length>1){
                 res.map(row => {
-                    message+= `-${providerName.name} \n <a href="${providerName.explorer}tx/${tx.hash}">txHash</a>`
+                let hash = `<a href="${providerName.explorer}tx/${tx.hash}">txHash</a>`
+                let TrueValue= web3.utils.fromWei(tx.value, 'ether');
+                const formattedValue = parseFloat(TrueValue) >= 0.0001 ? parseFloat(TrueValue).toFixed(6).replace(/\.?0*$/, '') : parseFloat(TrueValue);
+                let from = '<a href="'+providerName.explorer+'adress/'+tx.from+'">'+tx.from.slice(0,4)+'..'+tx.from.slice(-2)+'</a>'
+                message+= `Chain: ${providerName.name} \n 
+                You Has Received ${formattedValue} ${providerName.symbol} estimated() ${hash} from ${from} `
                     bot.sendMessage(row.telegramid,message,{parse_mode: 'HTML'})
                   });
             }
             if(res.length == 1){
-                message+= `-${providerName.name} \n <a href="${providerName.explorer}tx/${tx.hash}">txHash</a>`
+                let hash = `<a href="${providerName.explorer}tx/${tx.hash}">txHash</a>`
+                let TrueValue= web3.utils.fromWei(tx.value, 'ether');
+                const formattedValue = parseFloat(TrueValue) >= 0.0001 ? parseFloat(TrueValue).toFixed(6).replace(/\.?0*$/, '') : parseFloat(TrueValue);
+                let from = '<a href="'+providerName.explorer+'adress/'+tx.from+'">'+tx.from.slice(0,4)+'..'+tx.from.slice(-2)+'</a>'
+                message+= `Chain: ${providerName.name} \n 
+                You Has Received ${formattedValue} ${providerName.symbol} estimated() ${hash} from ${from} `
                 bot.sendMessage(res[0].telegramid, message,{parse_mode: 'HTML'});
             }
         })
