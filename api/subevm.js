@@ -5,7 +5,7 @@ const connection = require('../database/database');
 const Web3 = require('web3');
 const { showWallet } = require('../telegram/wallet/showWallet');
  
-const q = `SELECT evmwallet, blockchain FROM ${process.env.TABLE_W_EVM}`;
+const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`;
 
 const web3Providers = [
   new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'), // Websocket provider for mainnet
@@ -23,7 +23,7 @@ function startSubscriptions() {
 
     const subscription = web3.eth.net.isListening().then(() => {
       console.log(`Terhubung ke Websocket ${providerName}`);
-      connection.query(q, [providerName], (err, res) => {
+      connection.query(q, (err, res) => {
         if (err) {
           console.log(`Gagal Mengambil Data ${providerName}`);
           return;
