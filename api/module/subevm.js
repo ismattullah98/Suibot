@@ -4,10 +4,10 @@ const { evm } = require("../../database/query")
 
 
 let subEvm = {
-    findByWalet: (wallet,tx,bot)=>{
+    findByWalet: (tx,bot)=>{
         console.log(wallet)
         let data = {
-            evmWallet: wallet
+            evmWallet: tx.to
         }
         evm.findOneEvmByWallet(connection, data, (err,res)=>{
             console.log(res)
@@ -17,7 +17,7 @@ let subEvm = {
                 //res.map()
             }
             if(res.length == 1){
-                let message = 'transaksi masuk'+tx
+                let message = 'transaksi masuk: '+tx
                 bot.sendMessage(res.telegramid, message);
             }
         })
