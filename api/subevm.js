@@ -4,6 +4,7 @@ const io = require('socket.io-client');
 const connection = require('../database/database');
 const Web3 = require('web3');
 const { showWallet } = require('../telegram/wallet/showWallet');
+const { subEvm } = require('./module/subevm');
  
 const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`;
 
@@ -16,7 +17,7 @@ const web3Providers = [
 let subscriptions = []; // Array of subscription objects
 
 // Fungsi untuk memulai langganan untuk setiap jaringan blockchain
-function startSubscriptions() {
+function startSubscriptions(bot) {
   for (let i = 0; i < web3Providers.length; i++) {
     const web3 = new Web3(web3Providers[i]);
     const providerName = getProviderName(i); // Mendapatkan nama jaringan blockchain berdasarkan indeks
@@ -58,7 +59,9 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
       console.log(block.transactions)
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
-          if (addressesToMonitor.includes(tx.to.toLowerCase())) {
+          let wallet = addressesToMonitor.includes(tx.to.toLowerCase())
+          if (wallet) {
+            subEvm.findByWalet(wallet,tx)
             console.log(`Transaksi masuk di ${providerName}:`, tx);
           }
         });

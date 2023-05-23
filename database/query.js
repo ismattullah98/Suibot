@@ -65,8 +65,8 @@ let evm = {
     db.query(findAll,data.telegramId,callback)
   },
   findOneEvmByWallet:(db,data,callback)=>{
-    let find = 'SELECT * FROM `'+tableEvm+'` WHERE `telegramid` = ? AND `evmwallet` = ?'
-    db.query(find,[data.telegramId,data.evmWallet],callback)
+    let find = 'SELECT * FROM `'+tableEvm+'` WHERE `evmwallet` = ?'
+    db.query(find,[data.evmWallet],callback)
   },
   //CREATE
   createOneEvm: (db, data, callback) => {
