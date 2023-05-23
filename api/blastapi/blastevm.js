@@ -20,7 +20,7 @@ let blastProvider = [
 
 function startSubscribe(){
     for (let i = 0; i < blastProvider.length; i++){
-        const web3 = new blast(blastProvider[i]);
+        const web3 = blastProvider[i];
         const providerName = getProviderName(i);
 
         const sub = web3.ethweb3.net.listening().then(()=>{
