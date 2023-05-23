@@ -27,7 +27,7 @@ let subEvm = {
                   });
             }
             if(res.length == 1){
-                let nameWallet = `<a href="${providerName.explorer}adress/${row.evmwallet}">${row.namewallet? row.namewallet:tx.to.slice(0,4)+'..'+tx.to.slice(-2)}</a>`
+                let nameWallet = `<a href="${providerName.explorer}adress/${tx.to}">${res.namewallet? res.namewallet:tx.to.slice(0,4)+'..'+tx.to.slice(-2)}</a>`
                 let hash = `<a href="${providerName.explorer}tx/${tx.hash}">txHash</a>`
                 let TrueValue= web3.utils.fromWei(tx.value, 'ether');
                 const formattedValue = parseFloat(TrueValue) >= 0.0001 ? parseFloat(TrueValue).toFixed(6).replace(/\.?0*$/, '') : parseFloat(TrueValue);
