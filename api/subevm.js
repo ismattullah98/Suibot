@@ -23,17 +23,17 @@ function startSubscriptions(bot) {
     const providerName = getProviderName(i); // Mendapatkan nama jaringan blockchain berdasarkan indeks
 
     const subscription = web3.eth.net.isListening().then(() => {
-      console.log(`Terhubung ke Websocket ${providerName}`);
+      console.log(`Terhubung ke Websocket ${providerName.name}`);
       connection.query(q, (err, res) => {
         if (err) {
-          console.log(`Gagal Mengambil Data ${providerName}`);
+          console.log(`Gagal Mengambil Data ${providerName.name}`);
           return;
         }
         const addressesToMonitor = res.map(row => row.evmwallet.toLowerCase());
-        startTransactionMonitoring(web3, addressesToMonitor, providerName);
+        startTransactionMonitoring(web3, addressesToMonitor, providerName.name);
       });
     }).catch((error) => {
-      console.log(`Tidak dapat terhubung ke websocket ${providerName}`, error);
+      console.log(`Tidak dapat terhubung ke websocket ${providerName.name}`, error);
     });
 
     subscriptions.push(subscription);
@@ -62,14 +62,14 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
           let wallet = addressesToMonitor.includes(tx.to.toLowerCase())
           if (wallet) {
             subEvm.findByWalet(wallet,tx)
-            console.log(`Transaksi masuk di ${providerName}:`, tx);
+            console.log(`Transaksi masuk di ${providerName.name}:`, tx);
           }
         });
       }
     });
   })
   .on('error', err => {
-    console.error(`Error websocket ${providerName}:`, err);
+    console.error(`Error websocket ${providerName.name}:`, err);
   });
 
 }
@@ -78,9 +78,13 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
 function getProviderName(index) {
   switch (index) {
     case 0:
-      return 'ZkSync Mainnet';
+      return {
+      name: 'zksync Mainnet',
+      explorer: 'https://explorer.zksync.io/',};
     case 1:
-      return 'ZKSync Testnet';
+      return {
+        name: 'zksync testnet',
+        explorer: 'https://goerli.explorer.zksync.io/',};
     // Add more provider names for other blockchains here
     default:
       return `Blockchain-${index}`;
