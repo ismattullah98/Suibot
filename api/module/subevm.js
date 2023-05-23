@@ -21,7 +21,7 @@ let subEvm = {
                   });
             }
             if(res.length == 1){
-                message+= `-${providerName.name} \n <a href=${providerName.explorer}tx/${tx.hash}>txHash<a>`
+                message+= `-${providerName.name} \n <a href=${providerName.explorer}tx/${tx.hash}>txHash</a>`
                 bot.sendMessage(res[0].telegramid, message,{parse_mode: 'HTML'});
             }
         })
