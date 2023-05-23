@@ -63,7 +63,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
           //console.log(tx.to)
           if (addressesToMonitor.includes(tx.to.toLowerCase())) {
             console.log(tx.to)
-            subEvm.findByWalet(tx,bot)
+            subEvm.findByWalet(tx,providerName,bot)
             console.log(`Transaksi masuk di ${providerName.name}:`, tx);
           }
         });
@@ -81,7 +81,7 @@ function getProviderName(index) {
   switch (index) {
     case 0:
       return {
-      name: 'zksync Mainnet',
+      name: 'zksync',
       explorer: 'https://explorer.zksync.io/',};
     case 1:
       return {
