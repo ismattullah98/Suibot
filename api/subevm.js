@@ -60,7 +60,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
           //let wallet 
-          console.log(tx.to)
+          //console.log(tx.to)
           if (addressesToMonitor.includes(tx.to.toLowerCase())) {
             console.log(tx.to)
             subEvm.findByWalet(tx,bot)
