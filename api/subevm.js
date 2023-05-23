@@ -63,7 +63,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
           //console.log(tx.to)
           if (addressesToMonitor.includes(tx.to.toLowerCase())) {
             console.log(tx.to)
-            subEvm.findByWalet(tx,providerName,bot)
+            subEvm.findByWalet(tx,providerName,bot,web3)
             console.log(`Transaksi masuk di ${providerName.name}:`, tx);
           }
         });
@@ -81,12 +81,46 @@ function getProviderName(index) {
   switch (index) {
     case 0:
       return {
-      name: 'zksync',
-      explorer: 'https://explorer.zksync.io/',};
+      name: 'ZKSYNC',
+      explorer: 'https://explorer.zksync.io/',
+      symbol: 'ETH'
+    };
     case 1:
       return {
         name: 'zksync testnet',
-        explorer: 'https://goerli.explorer.zksync.io/',};
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'ETH'
+      };
+    case 2:
+      return {
+        name: 'ARBITRUM',
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'ETH'
+      };
+    case 3:
+      return {
+        name: 'OPTIMISM',
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'ETH'
+      };
+    case 4:
+      return {
+        name: 'FANTOM',
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'FTM'
+      };
+    case 5:
+      return {
+        name: 'STARKNET',
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'ETH'
+      };
+    case 6:
+      return {
+        name: 'Polygon',
+        explorer: 'https://goerli.explorer.zksync.io/',
+        symbol: 'MATIC'
+      };
     // Add more provider names for other blockchains here
     default:
       return `Blockchain-${index}`;

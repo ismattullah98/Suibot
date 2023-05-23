@@ -4,7 +4,7 @@ const { evm } = require("../../database/query")
 
 
 let subEvm = {
-    findByWalet: (tx,providerName,bot)=>{
+    findByWalet: (tx,providerName,bot,web3)=>{
         console.log(tx)
         let data = {
             evmWallet: tx.to
