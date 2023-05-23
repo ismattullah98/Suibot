@@ -12,8 +12,8 @@ let blast = new Blast(config)
 let subscribe = [];
 
 let blastProvider = [
-    new blast(wsProvider(process.env.WSS_ARB_TEST)),
-    new blast(wsProvider(process.env.WSS_ARB)),
+    new blast.wsProvider(process.env.WSS_ARB_TEST),
+    new blast.wsProvider(process.env.WSS_ARB),
     
 ];
 
