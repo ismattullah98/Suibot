@@ -1,7 +1,7 @@
 
 require('dotenv').config();
-const request = require('request');
-const api = require('./api/eth');
+//const request = require('request');
+const api = require('./api/zkera');
 const db = require('./database/database')
 const query = require('./database/query')
 const tele = require('./telegram/menu')
