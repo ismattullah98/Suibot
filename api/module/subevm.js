@@ -1,3 +1,4 @@
+var TelegramBot = require('node-telegram-bot-api');
 const connection = require("../../database/database")
 const { evm } = require("../../database/query")
 let BOT_TOKEN = process.env.BOT_TOKEN;
