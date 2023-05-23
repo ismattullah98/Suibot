@@ -56,7 +56,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName) {
   web3.eth.subscribe('newBlockHeaders')
   .on('data', blockHeader => {
     web3.eth.getBlock('latest', true, (err, block) => {
-      console.log(block.transactions)
+      //console.log(block.transactions)
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
           let wallet = addressesToMonitor.includes(tx.to.toLowerCase())
