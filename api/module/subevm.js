@@ -22,7 +22,7 @@ let subEvm = {
                 const formattedValue = parseFloat(TrueValue) >= 0.0001 ? parseFloat(TrueValue).toFixed(6).replace(/\.?0*$/, '') : parseFloat(TrueValue);
                 let from = '<a href="'+providerName.explorer+'adress/'+tx.from+'">'+tx.from.slice(0,4)+'..'+tx.from.slice(-2)+'</a>'
                 
-                message+= `Chain: ${providerName.name} \n ${nameWallet} You Has Received ${formattedValue} ${providerName.symbol} from ${from} ${hash} `
+                message+= `Chain: ${providerName.name} \n ${nameWallet} You Has Received ${formattedValue} ${providerName.symbol} from ${from} check the transaction ${hash} here `
                     bot.sendMessage(row.telegramid,message,{parse_mode: 'HTML'})
                   });
             }
@@ -33,7 +33,7 @@ let subEvm = {
                 const formattedValue = parseFloat(TrueValue) >= 0.0001 ? parseFloat(TrueValue).toFixed(6).replace(/\.?0*$/, '') : parseFloat(TrueValue);
                 let from = '<a href="'+providerName.explorer+'adress/'+tx.from+'">'+tx.from.slice(0,4)+'..'+tx.from.slice(-2)+'</a>'
                 
-                message+= `Chain: ${providerName.name} \n ${nameWallet} You Has Received ${formattedValue} ${providerName.symbol} from ${from} ${hash}`
+                message+= `Chain: ${providerName.name} \n ${nameWallet} You Has Received ${formattedValue} ${providerName.symbol} from ${from} check the transaction ${hash} here`
                 bot.sendMessage(res[0].telegramid, message,{parse_mode: 'HTML'});
             }
         })
