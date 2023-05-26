@@ -7,7 +7,7 @@ const tableVenom = process.env.TABLE_W_VENOM;
 let allusers = {
   findOneUser: (db,data,callback)=>{
     let find = 'SELECT * FROM `'+tableUsers+'` WHERE `telegramid` = ?'
-    db.query(find,data.telegramId,callback);
+    db.query(find, data.telegramId,callback);
   },
   createOneUser: (db,data,callback)=>{
     let Dinput = {
@@ -35,6 +35,11 @@ let sui = {
     db.query(find, [data.telegramId,data.codeWallet], callback)
 
   },
+  findOneSuiByCodeWallet: (db, data, callback) => {
+    let find = 'SELECT * FROM `'+tableSui+'` WHERE `telegramid` = ? and `codewallet` = ?'
+    db.query(find, [data.telegramId,data.codeWallet], callback)
+
+  },
   findAllSui: (db, data, callback) => {
     let find = 'SELECT * FROM `'+tableSui+'` WHERE `telegramid` = ?'
     db.query(find, data.telegramId, callback)
@@ -52,8 +57,16 @@ let sui = {
     let update = 'UPDATE `'+tableSui+'` SET `suiwallet` = ? WHERE `telegramid` = ?'
     db.query(update, [data.suiWallet, data.telegramId], callback)
   },
-  deleteOneSui: (db,data,callback)=>{
-    let del = ''
+  updateOneSuiWalletByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableSui+'` SET `suiwallet` = ? WHERE `telegramid` = ? AND `codewallet`=?' 
+    db.query(update, [data.suiWallet, data.telegramId,data.codeWallet], callback)
+  },
+  updateOneSuiNameWalletByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableSui+'` SET `namewallet` = ? WHERE `telegramid` = ? AND `codewallet`=?' 
+    db.query(update, [data.nameWallet, data.telegramId,data.codeWallet], callback)
+  },
+  deleteOneSuiByCode: (db,data,callback)=>{
+    let del = 'DELETE FROM `'+tableSui+'` WHERE `telegramid`= ? AND `codewallet`=?'
       db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }
@@ -68,6 +81,10 @@ let evm = {
     let find = 'SELECT * FROM `'+tableEvm+'` WHERE `evmwallet` = ?'
     db.query(find,[data.evmWallet],callback)
   },
+  findOneEvmByCodeWallet:(db,data,callback)=>{
+    let find = 'SELECT * FROM `'+tableEvm+'` WHERE `codewallet` = ? AND `telegramid` =?'
+    db.query(find,[data.codeWallet,data.telegramId],callback)
+  },
   //CREATE
   createOneEvm: (db, data, callback) => {
     let randomBuffer = crypto.randomBytes(10)
@@ -81,9 +98,13 @@ let evm = {
     db.query(create, [data.telegramId,data.evmWallet,data.nameWallet], callback)
   },
   //UPDATE
-  updateOneEvm: (db, data, callback) => {
-    let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ?'
-    db.query(update, [data.evmWallet,data.telegramid], callback)
+  updateOneEvmWalletByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ? AND `codewallet` = ?'
+    db.query(update, [data.evmWallet,data.telegramId,data.codeWallet], callback)
+  },
+  updateOneEvmNameByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableEvm+'` SET `namewallet` = ? WHERE `telegramid` = ? AND `codewallet` = ?'
+    db.query(update, [data.nameWallet,data.telegramId,data.codeWallet], callback)
   },
   updateOneEvmPremium: (db, data, callback) => {
     let update = 'UPDATE `'+tableEvm+'` SET `evmwallet` = ? WHERE `telegramid` = ? AND `codewallet` = ?'
@@ -91,6 +112,10 @@ let evm = {
   },
   deleteOneEvm: (db,data,callback)=>{
     let del = 'Delete'
+      db.query(del,[data.telegramId, data.codeWallet], callback)
+  },
+  deleteOneEvmByCode: (db,data,callback)=>{
+    let del = 'DELETE FROM `'+tableEvm+'` WHERE `telegramid`= ? AND `codewallet`=?'
       db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }
@@ -100,6 +125,11 @@ let venom = {
   findOneVenom: (db, data, callback) => {
     let find = 'SELECT * FROM `'+tableVenom+'` WHERE `telegramid` = ?'
     db.query(find, data.telegramId, callback)
+
+  },
+  findOneVenomByCode: (db, data, callback) => {
+    let find = 'SELECT * FROM `'+tableVenom+'` WHERE `telegramid` = ? AND `codewallet` = ?'
+    db.query(find, [data.telegramId,data.codeWallet], callback)
 
   },
   createOneVenom: (db, data, callback) => {
@@ -113,8 +143,16 @@ let venom = {
     let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?'
     db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
   },
-  deleteOneVenom: (db,data,callback)=>{
-    let del = ''
+  updateOneVenomByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableVenom+'` SET `venomwallet` = ? WHERE `telegramid` = ? and `codewallet` = ?'
+    db.query(update, [data.venomWallet,data.telegramId,data.codeWallet], callback)
+  },
+  updateOneVenomNameByCode: (db, data, callback) => {
+    let update = 'UPDATE `'+tableVenom+'` SET `namewallet` = ? WHERE `telegramid` = ? and `codewallet` = ?'
+    db.query(update, [data.nameWallet,data.telegramId,data.codeWallet], callback)
+  },
+  deleteOneVenomByCode: (db,data,callback)=>{
+    let del = 'DELETE FROM `'+tableVenom+'` WHERE `telegramid`= ? AND `codewallet`=?'
       db.query(del,[data.telegramId, data.codeWallet], callback)
   }
 }

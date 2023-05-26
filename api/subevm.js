@@ -11,8 +11,8 @@ const q = `SELECT evmwallet FROM ${process.env.TABLE_W_EVM}`;
 const web3Providers = [
   new Web3.providers.WebsocketProvider('wss://mainnet.era.zksync.io/ws'), // Websocket provider for mainnet
   new Web3.providers.WebsocketProvider('wss://testnet.era.zksync.dev/ws'), // Websocket provider for Rinkeby testnet
-  new Web3.providers.WebsocketProvider(process.env.WSS_ARB),// Websocket provider for Rinkeby testnet
-  new Web3.providers.WebsocketProvider(process.env.WSS_OP), // Websocket provider for Rinkeby testnet
+  new Web3.providers.WebsocketProvider(process.env.WSS_OP),// Websocket provider for Rinkeby testnet
+  new Web3.providers.WebsocketProvider(process.env.WSS_POLYGON), // Websocket provider for Rinkeby testnet
   // Add more Websocket providers for other blockchains here
 ];
 
@@ -31,7 +31,7 @@ function startSubscriptions(bot) {
           console.log(`Gagal Mengambil Data ${providerName.name}`);
           return;
         }
-        const addressesToMonitor = res.map(row => row.evmwallet.toLowerCase());
+        const addressesToMonitor = res.map(row => row.evmwallet);
         startTransactionMonitoring(web3, addressesToMonitor, providerName,bot);
       });
     }).catch((error) => {
@@ -62,8 +62,8 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
           //let wallet 
-          //console.log(tx.to)
-          if (addressesToMonitor.includes(tx.to.toLowerCase())) {
+          //console.log(addressesToMonitor)
+          if (addressesToMonitor.includes(tx.to)) {
             console.log(tx.to)
             subEvm.findByWalet(tx,providerName,bot,web3)
             console.log(`Transaksi masuk di ${providerName.name}:`, tx);
@@ -89,40 +89,36 @@ function getProviderName(index) {
     };
     case 1:
       return {
-        name: 'zksync testnet',
+        name: 'ZKSYNC TESTNET',
         explorer: 'https://goerli.explorer.zksync.io/',
         symbol: 'ETH'
       };
     case 2:
       return {
-        name: 'ARBITRUM',
-        explorer: 'https://arbiscan.io/',
-        symbol: 'ETH'
-      };
-    case 3:
-      return {
         name: 'OPTIMISM',
         explorer: 'https://explorer.optimism.io/',
         symbol: 'ETH'
       };
-    case 4:
+    case 3:
       return {
-        name: 'FANTOM',
-        explorer: 'https://goerli.explorer.zksync.io/',
-        symbol: 'FTM'
-      };
-    case 5:
-      return {
-        name: 'STARKNET',
-        explorer: 'https://goerli.explorer.zksync.io/',
-        symbol: 'ETH'
-      };
-    case 6:
-      return {
-        name: 'Polygon',
-        explorer: 'https://goerli.explorer.zksync.io/',
+        name: 'POLYGON TESTNET',
+        explorer: 'https://mumbai.polygonscan.com/',
         symbol: 'MATIC'
       };
+    
+    // case 4:
+    //   return {
+    //     name: 'FANTOM',
+    //     explorer: 'https://goerli.explorer.zksync.io/',
+    //     symbol: 'FTM'
+    //   };
+    // case 5:
+    //   return {
+    //     name: 'STARKNET',
+    //     explorer: 'https://goerli.explorer.zksync.io/',
+    //     symbol: 'ETH'
+    //   };
+    
     // Add more provider names for other blockchains here
     default:
       return `Blockchain-${index}`;

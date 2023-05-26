@@ -1,8 +1,9 @@
 let q = require('../database/query');
 let db = require('../database/database');
-const {addWallet } = require('./wallet/addWallet');
-const {editWallet} = require('./wallet/editWallet');
+const {addWallet } = require('./wallet/addwallet/addWallet');
+const {editWallet} = require('./wallet/editwallet/editWallet');
 const { showWallet } = require('./wallet/showWallet');
+const { callbackDelete } = require('./wallet/deletewallet/callbackData');
 
 let telegram = {
     menu: (bot)=>{
@@ -53,7 +54,7 @@ let telegram = {
             //COINPRICE
             if(selectedQuery.toString().toLowerCase() == 'coinprice'){
                 bot.deleteMessage(chatId,query.message.message_id)
-                bot.sendMessage(chatId, 'coinprice')
+                bot.sendMessage(chatId, 'Coinprice feature under Development')
             }
             //PREMIUM 
             if(selectedQuery.toString().toLowerCase() == 'premium'){
@@ -112,6 +113,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 showWallet.evm(db,bot,data)
+                bot.deleteMessage(chatId,query.message.message_id)
             }
             //SHOW SUI WALLET
             if(selectedQuery.toString().toLowerCase() == 'showsuiwallet'){
@@ -119,6 +121,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 showWallet.sui(db,bot,data)
+                bot.deleteMessage(chatId,query.message.message_id)
                 
             }
             //SHOW VENOM WALLET
@@ -127,6 +130,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 showWallet.venom(db,bot,data)
+                bot.deleteMessage(chatId,query.message.message_id)
             }
             
             //////////////// END OF MENU SHOW WALLET ////////////////////////////
@@ -190,6 +194,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 editWallet.evmDisplay(db,bot,data)
+                bot.deleteMessage(chatId,query.message.message_id)
             }
             //EDIT SUI WALLET
             if(selectedQuery.toString().toLowerCase() == 'editsuiwallet'){
@@ -197,6 +202,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 editWallet.suiDisplay(db,bot,data);
+                bot.deleteMessage(chatId,query.message.message_id)
             }
             //EDIT VENOM WALLET
             if(selectedQuery.toString().toLowerCase() == 'editvenomwallet'){
@@ -204,6 +210,7 @@ let telegram = {
                     telegramId: chatId
                 }
                 editWallet.venomDisplay(db,bot,data);
+                bot.deleteMessage(chatId,query.message.message_id)
             }
             //////////////// END OF MENU EDIT WALLET//////////////////////////////
 
@@ -213,7 +220,9 @@ let telegram = {
                 bot.sendMessage(chatId, 'Delete Wallet: ',{reply_markup:{
                     inline_keyboard: [
                         [{text: 'EVM(ETH,BSC,..)',callback_data: 'deleteevmwallet'},
-                         {text: 'SUI',callback_data: 'deletesuiwallet'}],
+                         {text: 'SUI',callback_data: 'deletesuiwallet'},
+                         {text: 'VENOM',callback_data: 'deletevenomwallet'},
+                        ],
                         [{text: 'BACK', callback_data: 'backtomenuwallet'},
                          {text: 'CLOSE',callback_data: 'close'}],
                         [{text: 'Menu', callback_data: 'backtomenu'}]
@@ -222,11 +231,27 @@ let telegram = {
                     ]
                 }})
             }
-            //MENU CLOSE
-            // if(selectedQuery.toString().toLowerCase() == 'close'){
-            //     bot.deleteMessage(chatId,query.message.message_id);
-                
-            // }
+            //MENU > WALLET MENU> DELETE WALLET>DELETE EVM WALLET
+            if(selectedQuery.toString().toLowerCase()== 'deleteevmwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                callbackDelete.evm(bot,data)
+            }
+            //MENU > WALLET MENU> DELETE WALLET>DELETE SUI WALLET
+            if(selectedQuery.toString().toLowerCase()== 'deletesuiwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                callbackDelete.sui(bot,data)
+            }
+            //MENU > WALLET MENU> DELETE WALLET>DELETE VENOM WALLET
+            if(selectedQuery.toString().toLowerCase()== 'deletevenomwallet'){
+                let data = {
+                    telegramId: chatId
+                }
+                callbackDelete.venom(bot,data)
+            }
 
         })
     }

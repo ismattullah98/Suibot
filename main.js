@@ -2,15 +2,19 @@
 require('dotenv').config();
 //const request = require('request');
 const apiWeb3 = require('./api/subevm');
-apiBlast = require('./api/blastapi/blastevm')
+require('./api/polygon')
+//apiBlast = require('./api/blastapi/blastevm')
 const db = require('./database/database')
 const query = require('./database/query')
 const tele = require('./telegram/menu')
 let BOT_TOKEN = process.env.BOT_TOKEN;
 var TelegramBot = require('node-telegram-bot-api');
+const {deleteWallet} = require('./telegram/wallet/deletewallet/deleteWallet')
 const { showWallet } = require('./telegram/wallet/showWallet');
-const { addWallet } = require('./telegram/wallet/addWallet');
+const { addWallet } = require('./telegram/wallet/addwallet/addWallet');
 const { subscribe } = require('./api/blastapi/blastevm');
+const { editWallet } = require('./telegram/wallet/editwallet/editWallet');
+const callbackEdit = require('./telegram/wallet/editwallet/callbackData');
 var token = BOT_TOKEN;
 var bot = new TelegramBot(token, {polling: true});
 //Menu
@@ -26,17 +30,18 @@ bot.onText(/\/start/, (msg) => {
   let data = {
     telegramId: msg.chat.id
   }
+  let fullName = msg.chat.first_name+' '+msg.chat.last_name
   query.allusers.findOneUser(db,data,(err,res)=>{
     if(res.length ==0){
       query.allusers.createOneUser(db,msg.chat.id,(err,result)=>{
         if(err) throw err;
         if(result){
-          console.log(result); 
-          bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang ');
+          //console.log(result); 
+          bot.sendMessage(msg.chat.id, 'Hallo,selamat Datang'+fullName);
         }
       })
     }if(res.length >= 1){
-      console.log(msg)
+      //console.log(msg)
       bot.sendMessage(msg.chat.id, `yoo,welcome back ${msg.chat.first_name} Dancuk!!!`)
     }
   })
@@ -58,23 +63,32 @@ isRecording= true
   }
  addWallet.evm(db,bot,data);
 });
-
+//DELETE WALLET
+deleteWallet(bot)
 //EditWallet 
-bot.onText(/\/edit_(\w+)/, (msg, match) => {
-    const chatId = msg.chat.id;
-    const code = match[1];
-    if(code.slice(0,4) ==='evm_'){
-      //evm
-    }
-    if(code.slice(0,4 === 'sui_')){
-      //sui
-    }
-    if(code.slice(0,6) === 'venom_'){
-      //venom
-    }
-  // Kirim pesan balasan ke pengguna
-  bot.sendMessage(chatId, `Perintah edit dengan kode: ${code}`);
+bot.onText(/\/edit_(.*)/, (msg, match) => {
+  const chatId = msg.chat.id;
+  //console.log(msg)
+  const input = match[1]; // Mendapatkan input setelah "/edit_evm_"
+
+  // Membuat keyboard inline dengan tombol "editname" dan "editwallet"
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: 'Edit Name', callback_data: `editname_${input}` },
+        { text: 'Edit Wallet', callback_data: `editwallet_${input}` }
+      ]
+    ]
+  };
+
+  // Mengirim pesan dengan keyboard inline
+  bot.sendMessage(chatId, 'Pilih opsi yang ingin Anda edit:', {
+    reply_markup: keyboard
+  });
 });
+callbackEdit(bot)
+
+  
 //view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
   data = {
@@ -112,7 +126,6 @@ bot.onText(/\/checkbalance/, (msg) => {
 bot.on('callback_query', (query) => {
   let chatId = query.message.chat.id;
   selectedNetwork = query.data;
-
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
   //Devnet
   if(selectedNetwork == 'devnet'){
@@ -137,24 +150,6 @@ bot.on('callback_query', (query) => {
   
 });
 
-//Faucet Feature
-bot.onText(/\/faucet/, (msg) => {
-  // mengambil id chat
-  let chatId = msg.chat.id;
-  let ip = msg.from.ip
-  console.log(msg)
-
-  // mengirim pesan untuk meminta user memilih jaringan
-  bot.sendMessage(chatId, 'Silahkan pilih jaringan: ', {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: 'Devnet', callback_data: 'faucetdevnet' }],
-        [{ text: 'Testnet', callback_data: 'faucettestnet' }],
-        [{ text: 'Close', callback_data: 'Close' }]
-      ]
-    }
-  });
-});
 
 // menangani callback query dari user saat memilih jaringan
 bot.on('callback_query', (query) => {

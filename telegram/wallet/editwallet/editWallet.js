@@ -1,22 +1,25 @@
-let query = require('../../database/query')
+let query = require('../../../database/query');
+const callbackEditWallet = require('./callbackData');
 isRecording = false
 let editWallet = {
     //EVM WALLET
     evmDisplay: (db,bot,data)=>{
         query.evm.findAllEvm(db,data,(err,res)=>{
             if(err) throw err;
-            if(res){
-                console.log(res[0].codewallet)
+            if(res.length >1){
+                //console.log(res[0].codewallet)
                 let message = 'List of your Wallet: \n';
                 res.forEach((r,index)=>{
                     message += `${index + 1}. ${r.namewallet || '0x'+r.evmwallet.slice(3, 5)+'..'+ r.evmwallet.slice(-2)} :\n \`${r.evmwallet}\` \n /edit\\_${r.codewallet.replace('_', '\\_')} \n\n `;
                 })
                 bot.sendMessage(data.telegramId, message, {parse_mode: 'Markdown'})
+            }else{
+                bot.sendMessage(data.telegramId, '404 Wallet NotFound, add wallet frist!!!')
             }
         })
     },
     evmExecute: (db,bot,data)=>{
-
+            
     },
     //SUI WALLET
     suiDisplay: (db,bot,data)=>{
