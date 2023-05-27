@@ -60,7 +60,7 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
     web3.eth.getBlock(blockHeader.number, true, (err, block) => {
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
-          console.log(tx)
+          //console.log(tx)
           if (addressesToMonitor.includes(tx.to)) {
             if (tx.input !== '0x') {
               const inputData = web3.eth.abi.decodeParameters(['address', 'uint256'], tx.input);
