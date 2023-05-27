@@ -57,14 +57,18 @@ function startTransactionMonitoring(web3, addressesToMonitor, providerName,bot) 
   //   });
   web3.eth.subscribe('newBlockHeaders')
   .on('data', blockHeader => {
-    web3.eth.getBlock('latest', true, (err, block) => {
-      //console.log(block.transactions)
+    web3.eth.getBlock(blockHeader.number, true, (err, block) => {
       if (!err && block && block.transactions) {
         block.transactions.forEach(tx => {
-          //let wallet 
-          //console.log(addressesToMonitor)
+          console.log(tx)
           if (addressesToMonitor.includes(tx.to)) {
-            console.log(tx.to)
+            if (tx.input !== '0x') {
+              const inputData = web3.eth.abi.decodeParameters(['address', 'uint256'], tx.input);
+              const tokenAddress = inputData[0];
+              const tokenAmount = inputData[1];
+              console.log('Token Address:', tokenAddress);
+              console.log('Token Amount:', tokenAmount);
+            }
             subEvm.findByWalet(tx,providerName,bot,web3)
             console.log(`Transaksi masuk di ${providerName.name}:`, tx);
           }

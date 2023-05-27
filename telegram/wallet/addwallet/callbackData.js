@@ -1,48 +1,54 @@
 let db = require('../../../database/database');
 let query = require('../../../database/query')
-function callbackWallet(bot,data){ bot.on('callback_query',(callbackQuery) =>{
+function callbackWallet(bot){ bot.on('callback_query',(callbackQuery) =>{
     
+    //let processedCallbackQueries = [];
     let recordInput = false
     const chatId = callbackQuery.message.chat.id;
-    let action = callbackQuery.data;
-    if(action === 'skipnamewalletevm'){
-        data
-        //bot.deleteMessage(chatId, callbackQuery.message.message_id);
-        //INSERT TO DB
-         query.evm.createOneEvm(db,data,(err,res)=>{
-             if(res){
-                 console.log(data.evmWallet)
-                 bot.sendMessage(data.telegramId,`Wallet: \n ${data.evmWallet}\n Success saved!!!`)
-                 return;
-             }
-             if(err) throw err;
-         });
-    }
+        const action = callbackQuery.data;
+
+        if (action.startsWith('skipnameevm')) {
+            //INSERT TO DB
+            const input = action.slice(11);
+            const data = {
+                telegramId: chatId,
+                evmWallet: input,
+                nameWallet: '',
+            };
+
+            query.evm.createOneEvm(db, data, (err, res) => {
+                if (res) {
+                    console.log(res);
+                    bot.sendMessage(chatId, `Wallet: \n ${data.evmWallet}\n Success saved!!!`);
+                    return
+                } else if (err) {
+                    console.error('Error input ke DB', err);
+                }
+            });
+        }
     if(action === 'addnamewalletevm'){
         data
-        //bot.deleteMessage(chatId, callbackQuery.message.message_id);
-        //console.log(action);
         bot.sendMessage(chatId, 'Please enter the wallet name:')
         const messageListener = (msg) => {
             let text = msg.text;
-            let chatId = msg.chat.id;
             data.nameWallet = text;
             query.evm.createOneEvm(db,data,(err,res)=>{
                 if(res){
-                    bot.sendMessage(chatId,`${data.nameWallet}: \n ${data.evmWallet}\n \n Success saved!!!`)
+                    bot.sendMessage(msg.chat.id,`${data.nameWallet}: \n ${data.evmWallet}\n \n Success saved!!!`)
                     bot.removeListener('message', messageListener);
                 }
                 if(err) throw err;
             });
         }
         bot.on('message', messageListener);
+        return;
     }
     if(action === 'skipnamewalletsui'){
         data
         bot.deleteMessage(chatId, callbackQuery.message.message_id);
         query.sui.createOneSui(db,data,(err,res)=>{
             if(res){
-                console.log(data.suiWallet)
+                //console.log(data.suiWallet)
                 bot.sendMessage(data.telegramId, 'Success Saved!!!')
                 
             }

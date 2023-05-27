@@ -91,17 +91,17 @@ callbackEdit(bot)
   
 //view SUI wallet Address
 bot.onText(/\/suiwallet/,(msg)=>{
-  data = {
+  let data = {
     telegramId: msg.chat.id
   }
   showWallet.sui(db,bot,data)
 })
 // SETTING-UP SUI WALLET
 bot.onText(/\/setsuiwallet/, (msg) => {
-  data = {
+  let data = {
     telegramId : msg.chat.id
   }
-  addWallet.sui(db,bot,data)
+  addWallet.sui(db, bot, data)
 });
 
 bot.onText(/\/checkbalance/, (msg) => {

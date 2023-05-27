@@ -21,7 +21,7 @@ let callbackEdit = (bot) => {
         if (err) throw err;
         //jIKA ADA
         if (res.length == 1) {
-          console.log(res);
+          //console.log(res);
           //SEND MESSEGE
           bot.sendMessage(chatId, 'Masukan Nama Wallet:');
           //EVENT LISTENER
@@ -57,7 +57,7 @@ let callbackEdit = (bot) => {
         if (err) throw err;
         //jIKA ADA
         if (res.length == 1) {
-          console.log(res);
+          //console.log(res);
           //SEND MESSEGE
           bot.sendMessage(chatId, 'Masukan Nama Wallet:');
           //EVENT LISTENER
@@ -93,7 +93,7 @@ let callbackEdit = (bot) => {
         if (err) throw err;
         //jIKA ADA
         if (res.length == 1) {
-          console.log(res);
+          //console.log(res);
           //SEND MESSEGE
           bot.sendMessage(chatId, 'Masukan Nama Wallet:');
           //EVENT LISTENER
@@ -139,7 +139,7 @@ let callbackEdit = (bot) => {
           if (err) throw err;
           //Jika Ketemu
           if (res.length == 1) {
-            console.log(res);
+            //console.log(res);
             bot.sendMessage(chatId, 'Silahkan Masukkan EVM Wallet:');
             //Event Listener
             const messageListener = (msg) => {
@@ -168,7 +168,6 @@ let callbackEdit = (bot) => {
                 bot.sendMessage(chatId, `Format Wallet Salah,Coba lagi? \n /edit_${input}`)
                 bot.removeListener('message', messageListener);
               }
-              
             };
             bot.on('message', messageListener);
           }else{
