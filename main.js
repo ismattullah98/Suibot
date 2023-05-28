@@ -63,8 +63,9 @@ isRecording= true
   }
  addWallet.evm(db,bot,data);
 });
+
 //DELETE WALLET
-deleteWallet(bot)
+deleteWallet(bot);
 //EditWallet 
 bot.onText(/\/edit_(.*)/, (msg, match) => {
   const chatId = msg.chat.id;
@@ -126,10 +127,11 @@ bot.onText(/\/checkbalance/, (msg) => {
 bot.on('callback_query', (query) => {
   let chatId = query.message.chat.id;
   selectedNetwork = query.data;
+
   // mengirim pesan untuk meminta user memasukkan input setelah memilih jaringan
   //Devnet
   if(selectedNetwork == 'devnet'){
-  
+
   bot.sendMessage(chatId, 'Anda memilih jaringan ' + selectedNetwork + '. Wait A Second 🐒');
   //devnet
   bot.deleteMessage(chatId, query.message.message_id);  

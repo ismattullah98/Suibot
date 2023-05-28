@@ -14,6 +14,9 @@ let callbackEdit = (bot) => {
         telegramId: userId,
         codeWallet: input
       };
+      setTimeout(()=>{
+        bot.deleteMessage(chatId,q.message.message_id)
+      },500)
       //EDIT NAME EVM
       if(input.slice(0,3) == 'evm'){
         //CHECK CODE WALLET USER
@@ -126,7 +129,9 @@ let callbackEdit = (bot) => {
     }
     //EDITWALLET//
     if (action.startsWith('editwallet_')) {
-      //bot.deleteMessage(chatId,q.message.message_id)
+      setTimeout(()=>{
+        bot.deleteMessage(chatId,q.message.message_id)
+      },500)
       const input = action.slice(11);
       let data = {
         telegramId: userId,
