@@ -27,15 +27,19 @@ let deleteWallet = (bot) => {
       let action = q.data;
 
       if (action.startsWith('deletewallet_')) {
+        setTimeout(()=>{
+          bot.deleteMessage(chatId, q.message.message_id )
+        },700)
         let input = action.slice(13);
         if (input === match[1]) {
             if(input.slice(0,3)==='evm'){
               data.evmWalet = input
               query.evm.findOneEvmByCodeWallet(db,data,(err,res)=>{
-                if(res>0){
+                if(res.lenth>0){
                   query.evm.deleteOneEvmByCode(db,data,(err,res)=>{
-                    console.log(res)
+                    //console.log(res)
                     bot.sendMessage(chatId, 'Success Delete Your Wallet')
+                    action = 'backtomenu'
                     
                   })
                   
@@ -85,6 +89,9 @@ let deleteWallet = (bot) => {
           //bot.sendMessage(chatId, 'Wallet deleted successfully');
         }
       } else if (action.startsWith('canceldelete_')) {
+        setTimeout(()=>{
+          bot.deleteMessage(chatId, q.message.message_id )
+        },700)
         let input = action.slice(13);
         if (input === match[1]) {
           bot.sendMessage(chatId, 'Cancelled, Click /menu to open the menu');
